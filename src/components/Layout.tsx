@@ -1,5 +1,7 @@
 import React, { ReactNode } from "react";
 
+import Navbar from "./Navbar";
+
 interface LayoutProps {
   children: ReactNode;
 }
@@ -7,7 +9,8 @@ interface LayoutProps {
 const Layout = ({ children }: LayoutProps) => {
   return (
     <div className="h-screen w-full overflow-auto ">
-      <div className="h-full w-full overflow-auto bg-color1">{children}</div>
+      <Navbar />
+      <div className="h-full w-full overflow-auto bg-[#EBECF1]">{children}</div>
     </div>
   );
 };
