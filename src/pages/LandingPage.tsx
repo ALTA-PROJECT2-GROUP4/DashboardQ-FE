@@ -74,7 +74,7 @@ const LandingPage = () => {
       </div>
 
       <div id="modal-login" className={`modal ${modal}`}>
-        <div className="modal-box w-8/12 max-w-full bg-color2 shadow-xl">
+        <div className="modal-box max-w-full bg-color2 shadow-xl md:w-11/12 lg:w-8/12">
           <div
             onClick={() => setModal("modal")}
             className="rounded-ful absolute right-2 top-2 z-50 rounded-3xl bg-color3 px-2 py-0.5 text-[20px] font-bold text-color2 hover:cursor-pointer hover:bg-[rgba(31,64,104,0.8)]  hover:text-color1"
