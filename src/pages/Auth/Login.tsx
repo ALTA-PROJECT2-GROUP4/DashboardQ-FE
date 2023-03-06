@@ -36,12 +36,12 @@ const Login = () => {
               className="input-border input h-8 w-9/12 max-w-full rounded-lg border-2 border-color4 bg-color2 px-4 py-4 text-[15px] font-normal text-color1 placeholder-slate-400"
             />
           </div>
-
+          {/* 
           <button
             id="btn-login"
             placeholder="Login"
             className="rounded-3xl bg-color1 py-3 px-6 text-[15px] font-semibold text-white hover:bg-[rgb(0,140,255)] disabled:cursor-not-allowed disabled:bg-color2 md:ml-[30vw] md:mt-10 md:text-[16px] lg:mt-14 lg:ml-[34vw] lg:text-[18px]"
-          />
+          /> */}
         </div>
       </div>
     </div>
