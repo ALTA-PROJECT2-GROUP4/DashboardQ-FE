@@ -4,6 +4,7 @@ import { useCookies } from "react-cookie";
 import LandingPage from "../pages/LandingPage";
 import Dashboard from "../pages/Dashboard";
 import UserList from "../pages/UserList";
+import MenteeList from "../pages/MenteeList";
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
       <Route path="/" element={<Dashboard />}/>
       <Route path="/landingpage" element={<LandingPage />}/>
       <Route path="/user" element={<UserList />}/>
+      <Route path="/mentee" element={<MenteeList />}/>
     </Routes>
     </BrowserRouter>
   )
