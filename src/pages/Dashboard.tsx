@@ -3,8 +3,8 @@ import "../styles/index.css";
 const Dashboard = () => {
   return (
     <div className="">
-      <p className="text-red-500 text-5xl">Poppins</p>
-      <p className="laila text-red-500 text-5xl">Laila</p>
+      <p className="mt-10 text-5xl text-red-500">Poppins</p>
+      <p className="laila text-5xl text-red-500">Laila</p>
       <button className="btn">Button</button>
     </div>
   );
