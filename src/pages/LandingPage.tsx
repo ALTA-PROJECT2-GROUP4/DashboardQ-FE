@@ -4,9 +4,19 @@ import Landing from "../assets/landing.svg";
 
 import withReactContent from "sweetalert2-react-content";
 import Swal from "../utils/Swal";
+import { useState } from "react";
+import Login from "./Auth/Login";
+
+import { IoMdCloseCircleOutline } from "react-icons/io";
 
 const LandingPage = () => {
   const MySwal = withReactContent(Swal);
+
+  const [modal, setModal] = useState<string>("modal");
+
+  const HandleLogin = async () => {
+    setModal("modal-open");
+  };
 
   const HandleRegis = () => {
     MySwal.fire({
@@ -39,7 +49,10 @@ const LandingPage = () => {
             Make your account now and enjoy the <br /> convience.
           </p>
 
-          <button className="rounded-2xl bg-color3 py-1 font-medium text-color2 shadow-[1px_2px_3px_0px_rgba(0,0,0,0.4)] md:mt-14 md:w-[18rem] md:text-[28px] lg:mt-8 lg:w-52 lg:text-[20px]">
+          <button
+            onClick={() => HandleLogin()}
+            className="rounded-2xl bg-color3 py-1 font-medium text-color2 shadow-[1px_2px_3px_0px_rgba(0,0,0,0.4)] md:mt-14 md:w-[18rem] md:text-[28px] lg:mt-8 lg:w-52 lg:text-[20px]"
+          >
             Login
           </button>
 
@@ -57,6 +70,20 @@ const LandingPage = () => {
 
         <div className="hidden justify-center md:hidden md:w-6/12 lg:flex lg:w-7/12">
           <img src={Landing} alt="landing.svg" className="w-10/12" />
+        </div>
+      </div>
+
+      <div id="modal-login" className={`modal ${modal}`}>
+        <div className="modal-box w-8/12 max-w-full bg-color2 shadow-xl">
+          <div
+            onClick={() => setModal("modal")}
+            className="rounded-ful absolute right-2 top-2 z-50 rounded-3xl bg-color3 px-2 py-0.5 text-[20px] font-bold text-color2 hover:cursor-pointer hover:bg-[rgba(31,64,104,0.8)]  hover:text-color1"
+          >
+            <p className="" onClick={() => setModal("modal")}>
+              ✕
+            </p>
+          </div>
+          <Login />
         </div>
       </div>
     </Layout>
