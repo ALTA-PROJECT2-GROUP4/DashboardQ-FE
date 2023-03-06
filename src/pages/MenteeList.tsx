@@ -76,23 +76,23 @@ const MenteeList = () => {
                 <td>Active</td>
                 <td>Non-Infomatic</td>
                 <td>male</td>
-                <td>
-                  <button className="btn-ghost btn gap-2">
+                <td >
+                  <p className="gap-2 font-normal flex">
                     <GoBook size={25}/>
                     Log
-                  </button>
+                  </p>
                 </td>
                 <td>
-                  <button className="btn-ghost btn gap-2">
+                  <p className="gap-2 font-normal flex">
                     <BiEdit size={25} />
                     Edit
-                  </button>
+                  </p>
                 </td>
                 <td>
-                  <button className="btn-ghost btn gap-2 text-red-500">
+                  <p className="gap-2 font-normal flex text-red-500">
                     <TfiTrash color="red" size={25} />
                     Delete
-                  </button>
+                  </p>
                 </td>
               </tr>
               {/* row 2 */}
@@ -103,23 +103,23 @@ const MenteeList = () => {
                 <td>Graduet</td>
                 <td>Non-Infomatic</td>
                 <td>male</td>
-                <td>
-                  <button className="btn-ghost btn gap-2">
+                <td >
+                  <p className="gap-2 font-normal flex">
                     <GoBook size={25}/>
                     Log
-                  </button>
+                  </p>
                 </td>
                 <td>
-                  <button className="btn-ghost btn gap-2">
+                  <p className="gap-2 font-normal flex">
                     <BiEdit size={25} />
                     Edit
-                  </button>
+                  </p>
                 </td>
                 <td>
-                  <button className="btn-ghost btn gap-2 text-red-500">
+                  <p className="gap-2 font-normal flex text-red-500">
                     <TfiTrash color="red" size={25} />
                     Delete
-                  </button>
+                  </p>
                 </td>
               </tr>
               {/* row 3 */}
@@ -130,23 +130,23 @@ const MenteeList = () => {
                 <td>Eliminated</td>
                 <td>Infomatic</td>
                 <td>Female</td>
-                <td>
-                  <button className="btn-ghost btn gap-2">
+                <td >
+                  <p className="gap-2 font-normal flex">
                     <GoBook size={25}/>
                     Log
-                  </button>
+                  </p>
                 </td>
                 <td>
-                  <button className="btn-ghost btn gap-2">
+                  <p className="gap-2 font-normal flex">
                     <BiEdit size={25} />
                     Edit
-                  </button>
+                  </p>
                 </td>
                 <td>
-                  <button className="btn-ghost btn gap-2 text-red-500">
+                  <p className="gap-2 font-normal flex text-red-500">
                     <TfiTrash color="red" size={25} />
                     Delete
-                  </button>
+                  </p>
                 </td>
               </tr>
               {/* row 4 */}
@@ -157,23 +157,23 @@ const MenteeList = () => {
                 <td>Placement</td>
                 <td>Infomatic</td>
                 <td>Female</td>
-                <td>
-                  <button className="btn-ghost btn gap-2">
+                <td >
+                  <p className="gap-2 font-normal flex">
                     <GoBook size={25}/>
                     Log
-                  </button>
+                  </p>
                 </td>
                 <td>
-                  <button className="btn-ghost btn gap-2">
+                  <p className="gap-2 font-normal flex">
                     <BiEdit size={25} />
                     Edit
-                  </button>
+                  </p>
                 </td>
                 <td>
-                  <button className="btn-ghost btn gap-2 text-red-500">
+                  <p className="gap-2 font-normal flex text-red-500">
                     <TfiTrash color="red" size={25} />
                     Delete
-                  </button>
+                  </p>
                 </td>
               </tr>
             </tbody>
