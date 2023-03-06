@@ -3,7 +3,7 @@ import { Provider } from "react-redux";
 import React from "react";
 
 import App from "./routes/App";
-// import MenteeList from "./pages/MenteeList";
+
 
 import "./styles/index.css";
 
