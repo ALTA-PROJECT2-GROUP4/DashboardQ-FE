@@ -1,6 +1,7 @@
 import React from "react";
 
 import Layout from "../components/Layout";
+import Navbar from "../components/Navbar";
 
 import "../styles/index.css";
 import { AiOutlineLineChart } from "react-icons/ai";
@@ -10,6 +11,7 @@ import { IoIosRepeat } from "react-icons/io";
 const Dashboard = () => {
   return (
     <Layout>
+      <Navbar />
       <div className="flex flex-col">
         <div className="flex-none p-6">
           <p className="mt-20 text-5xl font-semibold text-[#000000]">

@@ -8,16 +8,16 @@ const Navbar = () => {
       </div>
       <div className="flex-none">
         <ul className="menu menu-horizontal px-1">
-            <li className="p-2 text-xl font-semibold text-[#232932]">
+            <li className="p-2 text-xl text-white hover:text-[#232932]">
                 Dashboard
             </li>
-            <li className="p-2 text-xl text-white">
+            <li className="p-2 text-xl text-white hover:text-[#232932]">
                 Mentee
             </li>
-            <li className="p-2 text-xl text-white">
+            <li className="p-2 text-xl text-white hover:text-[#232932]">
                 User
             </li>
-            <li className="p-2 text-xl text-white">
+            <li className="p-2 text-xl text-white hover:text-[#232932]">
                 Class
             </li>
         </ul>
