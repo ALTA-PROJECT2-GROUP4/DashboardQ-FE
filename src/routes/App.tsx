@@ -9,10 +9,9 @@ import AddMente from "../pages/AddMente";
 import EditUser from "../pages/EditUser";
 import UserList from "../pages/UserList";
 import MenteeLog from "../pages/MenteeLog";
-
 import AddUser from "../pages/AddUser";
-
 import Class from "../pages/Class";
+import AddNewLog from "../pages/AddNewLog";
 
 const App = () => {
   return (
@@ -28,6 +27,7 @@ const App = () => {
         <Route path="/edituser/:user_id" element={<EditUser />} />
         <Route path="/addmente" element={<AddMente />} />
         <Route path="/editmente/:mente_id" element={<EditMente />} />
+        <Route path="/addfeedback/:mente_id" element={<AddNewLog />} />
       </Routes>
     </BrowserRouter>
   );
