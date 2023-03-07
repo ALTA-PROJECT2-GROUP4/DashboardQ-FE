@@ -6,6 +6,7 @@ import Dashboard from "../pages/Dashboard";
 import UserList from "../pages/UserList";
 import MenteeList from "../pages/MenteeList";
 import Class from "../pages/Class";
+import AddUser from "../pages/AddUser";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
         <Route path="/user" element={<UserList />} />
         <Route path="/mentee" element={<MenteeList />} />
         <Route path="/class" element={<Class />} />
+        <Route path="/adduser" element={<AddUser />} />
       </Routes>
     </BrowserRouter>
   );
