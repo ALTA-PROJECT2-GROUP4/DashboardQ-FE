@@ -3,14 +3,12 @@ import CustomInput from "../components/CustomInput";
 import Layout from "../components/Layout";
 import Navbar from "../components/Navbar";
 
-const AddClass = () => {
+const EditClass = () => {
   return (
     <Layout>
       <Navbar />
       <div className="pl-20">
-        <p className="my-14 text-[32px] font-medium text-color1">
-          Menambahkan Kelas
-        </p>
+        <p className="my-14 text-[32px] font-medium text-color1">Edit Kelas</p>
 
         <div className="flex  items-center gap-4 text-[16px] font-medium text-color1">
           <p className="w-32">Class Name :</p>
@@ -53,11 +51,11 @@ const AddClass = () => {
 
         <div className="mb-20 flex gap-5 md:mt-14 lg:mt-32">
           <CustomButton id="btn-cancel" label="Kembali" />
-          <CustomButton id="btn-cancel" label="Menambah Kelas" />
+          <CustomButton id="btn-cancel" label="Edit Kelas" />
         </div>
       </div>
     </Layout>
   );
 };
 
-export default AddClass;
+export default EditClass;
