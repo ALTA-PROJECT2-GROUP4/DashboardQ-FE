@@ -8,7 +8,10 @@ import Dashboard from "../pages/Dashboard";
 import AddMente from "../pages/AddMente";
 import EditUser from "../pages/EditUser";
 import UserList from "../pages/UserList";
+import MenteeLog from "../pages/MenteeLog";
+
 import AddUser from "../pages/AddUser";
+
 import Class from "../pages/Class";
 
 const App = () => {
@@ -18,7 +21,8 @@ const App = () => {
         <Route path="/" element={<Dashboard />} />
         <Route path="/landingpage" element={<LandingPage />} />
         <Route path="/user" element={<UserList />} />
-        <Route path="/mentee" element={<MenteeList />} />
+        <Route path="/mente" element={<MenteeList />} />
+        <Route path="/mente/:mente_id" element={<MenteeLog />} />
         <Route path="/class" element={<Class />} />
         <Route path="/adduser" element={<AddUser />} />
         <Route path="/edituser/:user_id" element={<EditUser />} />

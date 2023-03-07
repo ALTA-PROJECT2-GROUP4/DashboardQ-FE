@@ -3,6 +3,7 @@ import { Provider } from "react-redux";
 import React from "react";
 
 import App from "./routes/App";
+import MenteeLog from "./pages/MenteeLog";
 
 
 import "./styles/index.css";
