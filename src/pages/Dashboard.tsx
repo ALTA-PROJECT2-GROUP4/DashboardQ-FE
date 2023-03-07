@@ -19,7 +19,7 @@ const Dashboard = () => {
           </p>
         </div>
         <div className="mt-12">
-          <p className="text-start text-5xl font-semibold p-6">Mentee</p>
+          <p className="p-6 text-start text-5xl font-semibold">Mentee</p>
           <div className="flex flex-row justify-center space-x-32 p-5">
             <div className="card h-60 w-2/6 gap-3 bg-white p-3 shadow-md shadow-black">
               <div className="card-body items-center justify-center">
@@ -45,7 +45,10 @@ const Dashboard = () => {
               <div className="card-body items-center justify-center">
                 <div className="flex flex-col">
                   <figure className="px-10 pt-10">
-                    <IoIosRepeat size={50} style = {{transform: 'rotate(90deg)'}} />
+                    <IoIosRepeat
+                      size={50}
+                      style={{ transform: "rotate(90deg)" }}
+                    />
                   </figure>
                   <h2 className="card-title mt-10">Mentee Feedback</h2>
                 </div>

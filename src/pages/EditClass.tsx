@@ -46,11 +46,7 @@ const EditClass = () => {
 
         <div className="mt-5 flex items-center gap-4 text-[16px] font-medium text-color1 md:float-none md:w-7/12 lg:float-left lg:w-4/12">
           <p className="w-32">End Class :</p>
-          <CustomInput
-            id="input-endClass"
-            type="date"
-            className="input-border input h-10 w-7/12 max-w-full rounded-lg border-2 border-zinc-400 bg-[#EFFFFD] px-4 py-0 font-normal text-color1 placeholder-slate-400 md:text-[14px] lg:text-[15px]"
-          />
+          <CustomInput id="input-endClass" type="date" placeholder="" />
         </div>
 
         <div className="mb-20 flex gap-5 md:mt-14 lg:mt-32">

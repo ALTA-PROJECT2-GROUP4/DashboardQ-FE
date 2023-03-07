@@ -45,13 +45,13 @@ const UserList = () => {
                 <td>Academic</td>
                 <td>Admin</td>
                 <td>
-                  <p className="gap-2 flex font-normal">
+                  <p className="flex gap-2 font-normal">
                     <BiEdit size={25} />
                     Edit
                   </p>
                 </td>
                 <td>
-                  <p className="text-red-500 gap-2 flex font-normal">
+                  <p className="flex gap-2 font-normal text-red-500">
                     <TfiTrash color="red" size={25} />
                     Delete
                   </p>
@@ -65,13 +65,13 @@ const UserList = () => {
                 <td>People</td>
                 <td>User</td>
                 <td>
-                  <p className="gap-2 flex font-normal">
+                  <p className="flex gap-2 font-normal">
                     <BiEdit size={25} />
                     Edit
                   </p>
                 </td>
                 <td>
-                  <p className="text-red-500 gap-2 flex font-normal">
+                  <p className="flex gap-2 font-normal text-red-500">
                     <TfiTrash color="red" size={25} />
                     Delete
                   </p>
@@ -85,13 +85,13 @@ const UserList = () => {
                 <td>Placement</td>
                 <td>User</td>
                 <td>
-                  <p className="gap-2 flex font-normal">
+                  <p className="flex gap-2 font-normal">
                     <BiEdit size={25} />
                     Edit
                   </p>
                 </td>
                 <td>
-                  <p className="text-red-500 gap-2 flex font-normal">
+                  <p className="flex gap-2 font-normal text-red-500">
                     <TfiTrash color="red" size={25} />
                     Delete
                   </p>
@@ -105,13 +105,13 @@ const UserList = () => {
                 <td>Admission</td>
                 <td>Admin</td>
                 <td>
-                  <p className="gap-2 flex font-normal">
+                  <p className="flex gap-2 font-normal">
                     <BiEdit size={25} />
                     Edit
                   </p>
                 </td>
                 <td>
-                  <p className="text-red-500 gap-2 flex font-normal">
+                  <p className="flex gap-2 font-normal text-red-500">
                     <TfiTrash color="red" size={25} />
                     Delete
                   </p>
@@ -125,13 +125,13 @@ const UserList = () => {
                 <td>Academic</td>
                 <td>User</td>
                 <td>
-                  <p className="gap-2 flex font-normal">
+                  <p className="flex gap-2 font-normal">
                     <BiEdit size={25} />
                     Edit
                   </p>
                 </td>
                 <td>
-                  <p className="text-red-500 gap-2 flex font-normal">
+                  <p className="flex gap-2 font-normal text-red-500">
                     <TfiTrash color="red" size={25} />
                     Delete
                   </p>
