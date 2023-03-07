@@ -1,12 +1,37 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
+import axios from "axios";
 
 import Layout from "../components/Layout";
 import Navbar from "../components/Navbar";
+
+import { UserType } from "../types/UserType";
 
 import { BiEdit } from "react-icons/bi";
 import { TfiTrash } from "react-icons/tfi";
 
 const UserList = () => {
+
+  const [users, setUsers] = useState<UserType[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    listUser();
+  }, []);
+
+  function listUser() {
+    axios.get("http://54.179.232.197/users", {
+      headers: {
+        Authorization: `Bearer ${`eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJ1c2VySUQiOjF9.YcjIOxo2EXg_aUFM-6RUZ5VJIYODTTYy25wlVlQFbho`}`
+      }
+    })
+    .then((response) => {
+      setUsers(response.data.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
+
   return (
     <Layout>
       <Navbar />
@@ -37,13 +62,13 @@ const UserList = () => {
               </tr>
             </thead>
             <tbody>
-              {/* row 1 */}
-              <tr className="font-semibold">
-                <th>1</th>
-                <td>Jhon Doe</td>
-                <td>JhonDoe1@gmail.com</td>
-                <td>Academic</td>
-                <td>Admin</td>
+              {users.map((user) => (
+              <tr key={user.id} className="font-semibold">
+                <th>{user.id}</th>
+                <td>{user.name}</td>
+                <td>{user.email}</td>
+                <td>{user.team}</td>
+                <td>{user.role}</td>
                 <td>
                   <p className="flex gap-2 font-normal">
                     <BiEdit size={25} />
@@ -57,86 +82,7 @@ const UserList = () => {
                   </p>
                 </td>
               </tr>
-              {/* row 2 */}
-              <tr className="font-semibold">
-                <th>2</th>
-                <td>Jhon Doe</td>
-                <td>JhonDoe12@gmail.com</td>
-                <td>People</td>
-                <td>User</td>
-                <td>
-                  <p className="flex gap-2 font-normal">
-                    <BiEdit size={25} />
-                    Edit
-                  </p>
-                </td>
-                <td>
-                  <p className="flex gap-2 font-normal text-red-500">
-                    <TfiTrash color="red" size={25} />
-                    Delete
-                  </p>
-                </td>
-              </tr>
-              {/* row 3 */}
-              <tr className="font-semibold">
-                <th>3</th>
-                <td>Jhon Doe</td>
-                <td>JhonDoe123@gmail.com</td>
-                <td>Placement</td>
-                <td>User</td>
-                <td>
-                  <p className="flex gap-2 font-normal">
-                    <BiEdit size={25} />
-                    Edit
-                  </p>
-                </td>
-                <td>
-                  <p className="flex gap-2 font-normal text-red-500">
-                    <TfiTrash color="red" size={25} />
-                    Delete
-                  </p>
-                </td>
-              </tr>
-              {/* row 4 */}
-              <tr className="font-semibold">
-                <th>4</th>
-                <td>Jhon Doe</td>
-                <td>JhonDoe1234@gmail.com</td>
-                <td>Admission</td>
-                <td>Admin</td>
-                <td>
-                  <p className="flex gap-2 font-normal">
-                    <BiEdit size={25} />
-                    Edit
-                  </p>
-                </td>
-                <td>
-                  <p className="flex gap-2 font-normal text-red-500">
-                    <TfiTrash color="red" size={25} />
-                    Delete
-                  </p>
-                </td>
-              </tr>
-              {/* row 5 */}
-              <tr className="font-semibold">
-                <th>5</th>
-                <td>Jhon Doe</td>
-                <td>JhonDoe12345@gmail.com</td>
-                <td>Academic</td>
-                <td>User</td>
-                <td>
-                  <p className="flex gap-2 font-normal">
-                    <BiEdit size={25} />
-                    Edit
-                  </p>
-                </td>
-                <td>
-                  <p className="flex gap-2 font-normal text-red-500">
-                    <TfiTrash color="red" size={25} />
-                    Delete
-                  </p>
-                </td>
-              </tr>
+              ))}
             </tbody>
           </table>
         </div>
