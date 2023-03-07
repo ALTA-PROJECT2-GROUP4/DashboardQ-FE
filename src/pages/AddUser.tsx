@@ -119,7 +119,7 @@ const AddUser = () => {
         </div>
 
         <div className="mt-8 flex items-center gap-4 text-[16px] font-medium text-color1">
-          <p className="w-24">Nama :</p>
+          <p className="w-24">Address :</p>
           <CustomInput
             id="input-nama"
             type="text"

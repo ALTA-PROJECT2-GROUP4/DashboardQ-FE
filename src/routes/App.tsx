@@ -2,12 +2,13 @@ import { BrowserRouter, Routes, Route, Router } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
 import LandingPage from "../pages/LandingPage";
-import Dashboard from "../pages/Dashboard";
-import UserList from "../pages/UserList";
 import MenteeList from "../pages/MenteeList";
-import Class from "../pages/Class";
-import AddUser from "../pages/AddUser";
+import Dashboard from "../pages/Dashboard";
+import AddMente from "../pages/AddMente";
 import EditUser from "../pages/EditUser";
+import UserList from "../pages/UserList";
+import AddUser from "../pages/AddUser";
+import Class from "../pages/Class";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="/class" element={<Class />} />
         <Route path="/adduser" element={<AddUser />} />
         <Route path="/edituser/:user_id" element={<EditUser />} />
+        <Route path="/addmente" element={<AddMente />} />
       </Routes>
     </BrowserRouter>
   );
