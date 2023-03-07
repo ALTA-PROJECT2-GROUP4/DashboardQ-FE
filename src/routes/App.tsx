@@ -2,10 +2,16 @@ import { BrowserRouter, Routes, Route, Router } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
 import LandingPage from "../pages/LandingPage";
-import Dashboard from "../pages/Dashboard";
-import UserList from "../pages/UserList";
 import MenteeList from "../pages/MenteeList";
+import EditMente from "../pages/EditMente";
+import Dashboard from "../pages/Dashboard";
+import AddMente from "../pages/AddMente";
+import EditUser from "../pages/EditUser";
+import UserList from "../pages/UserList";
 import MenteeLog from "../pages/MenteeLog";
+
+import AddUser from "../pages/AddUser";
+
 import Class from "../pages/Class";
 
 const App = () => {
@@ -18,6 +24,10 @@ const App = () => {
         <Route path="/mente" element={<MenteeList />} />
         <Route path="/mente/:mente_id" element={<MenteeLog />} />
         <Route path="/class" element={<Class />} />
+        <Route path="/adduser" element={<AddUser />} />
+        <Route path="/edituser/:user_id" element={<EditUser />} />
+        <Route path="/addmente" element={<AddMente />} />
+        <Route path="/editmente/:mente_id" element={<EditMente />} />
       </Routes>
     </BrowserRouter>
   );
