@@ -4,7 +4,7 @@ import CustomInput from "../components/CustomInput";
 import Layout from "../components/Layout";
 import Navbar from "../components/Navbar";
 
-const AddUser = () => {
+const EditUser = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [disable, setDisale] = useState<boolean>(false);
 
@@ -12,9 +12,7 @@ const AddUser = () => {
     <Layout>
       <Navbar />
       <div className="pl-20">
-        <p className="my-14 text-[32px] font-medium text-color1">
-          Menambahkan User
-        </p>
+        <p className="my-14 text-[32px] font-medium text-color1">Edit User</p>
 
         <div className="flex  items-center gap-4 text-[16px] font-medium text-color1">
           <p className="w-24">Nama :</p>
@@ -129,11 +127,11 @@ const AddUser = () => {
 
         <div className="mt-14 mb-20 flex gap-5">
           <CustomButton id="btn-cancel" label="Kembali" />
-          <CustomButton id="btn-cancel" label="Menambah User" />
+          <CustomButton id="btn-cancel" label="Edit User" />
         </div>
       </div>
     </Layout>
   );
 };
 
-export default AddUser;
+export default EditUser;
