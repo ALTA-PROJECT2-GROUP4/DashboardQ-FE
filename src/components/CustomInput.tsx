@@ -2,8 +2,8 @@ import { InputHTMLAttributes } from "react";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   id: string;
-  placeholder: string;
   type: string;
+  placeholder: string;
 }
 
 const CustomInput = ({ id, placeholder, type, ...props }: InputProps) => {

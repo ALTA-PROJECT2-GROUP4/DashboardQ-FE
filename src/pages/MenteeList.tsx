@@ -76,20 +76,20 @@ const MenteeList = () => {
                 <td>Active</td>
                 <td>Non-Infomatic</td>
                 <td>male</td>
-                <td >
-                  <p className="gap-2 font-normal flex">
-                    <GoBook size={25}/>
+                <td>
+                  <p className="flex gap-2 font-normal">
+                    <GoBook size={25} />
                     Log
                   </p>
                 </td>
                 <td>
-                  <p className="gap-2 font-normal flex">
+                  <p className="flex gap-2 font-normal">
                     <BiEdit size={25} />
                     Edit
                   </p>
                 </td>
                 <td>
-                  <p className="gap-2 font-normal flex text-red-500">
+                  <p className="flex gap-2 font-normal text-red-500">
                     <TfiTrash color="red" size={25} />
                     Delete
                   </p>
@@ -103,20 +103,20 @@ const MenteeList = () => {
                 <td>Graduet</td>
                 <td>Non-Infomatic</td>
                 <td>male</td>
-                <td >
-                  <p className="gap-2 font-normal flex">
-                    <GoBook size={25}/>
+                <td>
+                  <p className="flex gap-2 font-normal">
+                    <GoBook size={25} />
                     Log
                   </p>
                 </td>
                 <td>
-                  <p className="gap-2 font-normal flex">
+                  <p className="flex gap-2 font-normal">
                     <BiEdit size={25} />
                     Edit
                   </p>
                 </td>
                 <td>
-                  <p className="gap-2 font-normal flex text-red-500">
+                  <p className="flex gap-2 font-normal text-red-500">
                     <TfiTrash color="red" size={25} />
                     Delete
                   </p>
@@ -130,20 +130,20 @@ const MenteeList = () => {
                 <td>Eliminated</td>
                 <td>Infomatic</td>
                 <td>Female</td>
-                <td >
-                  <p className="gap-2 font-normal flex">
-                    <GoBook size={25}/>
+                <td>
+                  <p className="flex gap-2 font-normal">
+                    <GoBook size={25} />
                     Log
                   </p>
                 </td>
                 <td>
-                  <p className="gap-2 font-normal flex">
+                  <p className="flex gap-2 font-normal">
                     <BiEdit size={25} />
                     Edit
                   </p>
                 </td>
                 <td>
-                  <p className="gap-2 font-normal flex text-red-500">
+                  <p className="flex gap-2 font-normal text-red-500">
                     <TfiTrash color="red" size={25} />
                     Delete
                   </p>
@@ -157,20 +157,20 @@ const MenteeList = () => {
                 <td>Placement</td>
                 <td>Infomatic</td>
                 <td>Female</td>
-                <td >
-                  <p className="gap-2 font-normal flex">
-                    <GoBook size={25}/>
+                <td>
+                  <p className="flex gap-2 font-normal">
+                    <GoBook size={25} />
                     Log
                   </p>
                 </td>
                 <td>
-                  <p className="gap-2 font-normal flex">
+                  <p className="flex gap-2 font-normal">
                     <BiEdit size={25} />
                     Edit
                   </p>
                 </td>
                 <td>
-                  <p className="gap-2 font-normal flex text-red-500">
+                  <p className="flex gap-2 font-normal text-red-500">
                     <TfiTrash color="red" size={25} />
                     Delete
                   </p>

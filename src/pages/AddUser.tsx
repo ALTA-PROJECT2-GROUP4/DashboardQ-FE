@@ -57,7 +57,7 @@ const AddUser = () => {
           <CustomInput
             id="date"
             type="date"
-            placeholder={"test"}
+            placeholder={""}
             className="input-border input h-12 w-7/12 max-w-full rounded-lg border-2 border-zinc-400 bg-[#EFFFFD] px-4 py-0 font-normal text-color1 placeholder-slate-400 md:text-[14px] lg:text-[15px]"
           />
         </div>

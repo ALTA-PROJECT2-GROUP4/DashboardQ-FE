@@ -1,7 +1,7 @@
-import React from 'react'
+import React from "react";
 
-import Layout from '../components/Layout'
-import Navbar from '../components/Navbar'
+import Layout from "../components/Layout";
+import Navbar from "../components/Navbar";
 
 import { BiEdit } from "react-icons/bi";
 import { TfiTrash } from "react-icons/tfi";
@@ -9,8 +9,8 @@ import { TfiTrash } from "react-icons/tfi";
 const Class = () => {
   return (
     <Layout>
-        <Navbar />
-        <div className="-mt-16 flex flex-col p-20">
+      <Navbar />
+      <div className="-mt-16 flex flex-col p-20">
         <h2 className="mt-20 text-5xl font-semibold text-[#000000]">Class</h2>
         <div className="-mt-11 flex flex-wrap justify-end space-x-4">
           <div className="form-control">
@@ -20,7 +20,9 @@ const Class = () => {
               className="input-bordered input rounded-xl text-black"
             />
           </div>
-          <button className="btn rounded-2xl bg-[#1F4068]">Add New Class</button>
+          <button className="btn rounded-2xl bg-[#1F4068]">
+            Add New Class
+          </button>
         </div>
         <div className="mt-24 overflow-x-auto">
           <table className="table w-full">
@@ -45,18 +47,18 @@ const Class = () => {
                 <td>13-Jan-2023</td>
                 <td>14-Mar-2023</td>
                 <td>
-                  <p className="gap-2 flex font-normal">
+                  <p className="flex gap-2 font-normal">
                     <BiEdit size={25} />
                     Edit
                   </p>
                 </td>
                 <td>
-                  <p className="text-red-500 gap-2 flex font-normal">
+                  <p className="flex gap-2 font-normal text-red-500">
                     <TfiTrash color="red" size={25} />
                     Delete
                   </p>
                 </td>
-              </tr> 
+              </tr>
               {/* row 2 */}
               <tr className="font-semibold">
                 <th>2</th>
@@ -65,18 +67,18 @@ const Class = () => {
                 <td>25-Jan-2023</td>
                 <td>26-Mar-2023</td>
                 <td>
-                  <p className="gap-2 flex font-normal">
+                  <p className="flex gap-2 font-normal">
                     <BiEdit size={25} />
                     Edit
                   </p>
                 </td>
                 <td>
-                  <p className="text-red-500 gap-2 flex font-normal">
+                  <p className="flex gap-2 font-normal text-red-500">
                     <TfiTrash color="red" size={25} />
                     Delete
                   </p>
                 </td>
-              </tr> 
+              </tr>
               {/* row 3 */}
               <tr className="font-semibold">
                 <th>3</th>
@@ -85,24 +87,24 @@ const Class = () => {
                 <td>18-Jan-2023</td>
                 <td>19-Mar-2023</td>
                 <td>
-                  <p className="gap-2 flex font-normal">
+                  <p className="flex gap-2 font-normal">
                     <BiEdit size={25} />
                     Edit
                   </p>
                 </td>
                 <td>
-                  <p className="text-red-500 gap-2 flex font-normal">
+                  <p className="flex gap-2 font-normal text-red-500">
                     <TfiTrash color="red" size={25} />
                     Delete
                   </p>
                 </td>
-              </tr> 
+              </tr>
             </tbody>
           </table>
         </div>
       </div>
     </Layout>
-  )
-}
+  );
+};
 
-export default Class
+export default Class;
