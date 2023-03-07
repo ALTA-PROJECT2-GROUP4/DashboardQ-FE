@@ -1,7 +1,76 @@
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+
+import withReactContent from "sweetalert2-react-content";
+import { handleAuth } from "../../utils/redux/reducer/reducer";
+import Swal from "../../utils/Swal";
+
 import Image from "../../assets/image.svg";
 import Logo from "../../assets/logo.svg";
+import CustomButton from "../../components/CustomButton";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const MySwal = withReactContent(Swal);
+  const [cookie, setCookie] = useCookies(["token", "role", "email", "name"]);
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const [disable, setDisable] = useState<boolean>(true);
+
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+
+  useEffect(() => {
+    if (email && password) {
+      setDisable(false);
+    } else {
+      setDisable(true);
+    }
+  }, [email, password]);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    setLoading(true);
+    e.preventDefault();
+    const body = {
+      email,
+      password,
+    };
+
+    axios
+      .post("http://54.179.232.197/login", body)
+      .then((res) => {
+        const { message, token } = res.data;
+        const { name, email, role } = res.data.data;
+
+        setCookie("token", token, { path: "/" });
+        setCookie("role", role, { path: "/" });
+        setCookie("email", email, { path: "/" });
+        setCookie("name", name, { path: "/" });
+
+        dispatch(handleAuth(true));
+        MySwal.fire({
+          icon: "success",
+          title: message,
+          text: "login berhasil",
+          showCancelButton: false,
+        });
+        navigate("/dashboard");
+      })
+      .catch((err) => {
+        const { data } = err.response;
+        MySwal.fire({
+          title: "Login Failed",
+          text: data.message,
+          showCancelButton: false,
+        });
+      })
+      .finally(() => setLoading(false));
+  };
+
   return (
     <div className="h-10/12 -m-6 flex w-full">
       <div
@@ -11,7 +80,10 @@ const Login = () => {
 
       <div className="w-7/12 pl-5 pt-5">
         <img src={Logo} alt="logo.svg" className="w-44" />
-        <div className="mt-10 flex flex-col items-center text-[28px] font-semibold text-color1 lg:text-[32px]">
+        <form
+          onSubmit={(e) => handleSubmit(e)}
+          className="mt-10 flex flex-col items-center text-[28px] font-semibold text-color1 lg:text-[32px]"
+        >
           <p>Login </p>
           <p className="mt-2 border-b-2 border-dashed border-color1 pb-3 font-normal md:text-[16px] lg:text-[18px]">
             Let's login and enjoy together
@@ -23,8 +95,9 @@ const Login = () => {
             </p>
             <input
               id="input-email"
-              type="text"
+              type="email"
               placeholder="agungcahya122@gmail.com"
+              onChange={(e) => setEmail(e.target.value)}
               className="input-border input h-8 w-9/12 max-w-full rounded-lg border-2 border-color4 bg-color2 py-4 font-normal text-color1 placeholder-slate-400 md:px-2 md:text-[14px] lg:px-4 lg:text-[15px]"
             />
           </div>
@@ -37,17 +110,19 @@ const Login = () => {
               id="input-email"
               type="password"
               placeholder="***********"
+              onChange={(e) => setPassword(e.target.value)}
               className="input-border input h-8 w-9/12 max-w-full rounded-lg border-2 border-color4 bg-color2 px-4 py-4 font-normal text-color1 placeholder-slate-400 md:text-[14px] lg:text-[15px]"
             />
           </div>
 
-          <button
-            id="btn-login"
-            className="mt-8 w-48 rounded-xl bg-color3 py-1 px-2 text-[15px] font-semibold text-white hover:bg-[rgba(31,64,104,0.8)] hover:text-color1 disabled:cursor-not-allowed disabled:bg-color2 md:text-[16px] lg:text-[18px]"
-          >
-            Login
-          </button>
-        </div>
+          <div className="mt-5">
+            <CustomButton
+              id="btn-login"
+              label="Login"
+              loading={loading || disable}
+            />
+          </div>
+        </form>
       </div>
     </div>
   );

@@ -4,22 +4,22 @@ import { useCookies } from "react-cookie";
 import LandingPage from "../pages/LandingPage";
 import MenteeList from "../pages/MenteeList";
 import EditMente from "../pages/EditMente";
+import EditClass from "../pages/EditClass";
+import MenteeLog from "../pages/MenteeLog";
 import Dashboard from "../pages/Dashboard";
 import AddMente from "../pages/AddMente";
 import EditUser from "../pages/EditUser";
 import UserList from "../pages/UserList";
-import MenteeLog from "../pages/MenteeLog";
 import AddClass from "../pages/AddClass";
 import AddUser from "../pages/AddUser";
 import Class from "../pages/Class";
-import EditClass from "../pages/EditClass";
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/landingpage" element={<LandingPage />} />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/user" element={<UserList />} />
         <Route path="/mente" element={<MenteeList />} />
         <Route path="/class" element={<Class />} />
