@@ -3,6 +3,7 @@ import { useCookies } from "react-cookie";
 
 import LandingPage from "../pages/LandingPage";
 import MenteeList from "../pages/MenteeList";
+import EditMente from "../pages/EditMente";
 import Dashboard from "../pages/Dashboard";
 import AddMente from "../pages/AddMente";
 import EditUser from "../pages/EditUser";
@@ -22,6 +23,7 @@ const App = () => {
         <Route path="/adduser" element={<AddUser />} />
         <Route path="/edituser/:user_id" element={<EditUser />} />
         <Route path="/addmente" element={<AddMente />} />
+        <Route path="/editmente/:mente_id" element={<EditMente />} />
       </Routes>
     </BrowserRouter>
   );
