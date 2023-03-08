@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+
 import Layout from "../components/Layout";
 import Navbar from "../components/Navbar";
 
@@ -17,7 +18,9 @@ const MenteeList = () => {
   const [filterClass, setFilterClass] = useState("");
   const [filterCategory, setFilterCategory] = useState("");
   const [filterStatus, setFilterStatus] = useState("");
-  const [cookie, setCookie] = useCookies(["token"]);
+  const [cookie, setCookie] = useCookies(["token", "role"]);
+  const checkToken = cookie.token;
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     listMentee();
@@ -59,7 +62,6 @@ const MenteeList = () => {
     (filterCategory === "" || item.category === filterCategory) &&
     (filterStatus === "" || item.status === filterStatus)
   );
- 
 
   return (
     <Layout>
@@ -81,10 +83,12 @@ const MenteeList = () => {
           </button>
         </div>
         <div className="mt-10 flex flex-wrap justify-end space-x-3">
+
           <select className="select w-1/5 max-w-xs rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
            value={filterClass} 
            onChange={handleFilterClassChange}>
             <option value="">
+
               Class
             </option>
             <option value="FE 8">FE12</option>
@@ -113,6 +117,7 @@ const MenteeList = () => {
           </select>
           <button className="btn rounded-2xl bg-[#1F4068]">Filter</button>
         </div>
+
         <div className="mt-24 overflow-x-auto">
           <table className="table w-full">
             {/* head */}

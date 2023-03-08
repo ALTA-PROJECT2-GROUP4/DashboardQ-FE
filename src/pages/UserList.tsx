@@ -1,20 +1,37 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 import axios from "axios";
+
+import withReactContent from "sweetalert2-react-content";
+import Swal from "../utils/Swal";
 
 import Layout from "../components/Layout";
 import Navbar from "../components/Navbar";
 
 import { UserType } from "../types/UserType";
-import { useCookies } from "react-cookie";
 
 import { BiEdit } from "react-icons/bi";
 import { TfiTrash } from "react-icons/tfi";
 
 const UserList = () => {
+  const navigate = useNavigate();
+  const MySwal = withReactContent(Swal);
+  const [cookie, setCookie] = useCookies(["token", "role"]);
+  const checkRole = cookie.role;
+
   const [users, setUsers] = useState<UserType[]>([]);
   const [search, setSearch] = useState<string>("");
-  const [cookie, setCookie] = useCookies(["token"]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const handleAdmin = () => {
+    MySwal.fire({
+      icon: "error",
+      title: "Akses Ditolak",
+      text: "Tidak Bisa Menambah User Baru",
+      showCancelButton: false,
+    });
+  };
 
   useEffect(() => {
     listUser();
@@ -64,7 +81,14 @@ const UserList = () => {
               className="input-bordered input rounded-xl text-black"
             />
           </div>
-          <button className="btn rounded-2xl bg-[#1F4068]">Add New User</button>
+          <button
+            onClick={() =>
+              checkRole === "admin" ? navigate("/adduser") : handleAdmin()
+            }
+            className="btn rounded-2xl bg-[#1F4068]"
+          >
+            Add New User
+          </button>
         </div>
         <div className="mt-24 overflow-x-auto">
           <table className="table w-full">
