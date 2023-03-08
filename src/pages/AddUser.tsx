@@ -10,6 +10,7 @@ import CustomInput from "../components/CustomInput";
 import Layout from "../components/Layout";
 import Navbar from "../components/Navbar";
 import { useCookies } from "react-cookie";
+import { string } from "prop-types";
 
 const AddUser = () => {
   const navigate = useNavigate();
@@ -29,6 +30,20 @@ const AddUser = () => {
   const [role, setRole] = useState<string>("");
   const [address, setAddress] = useState<string>("");
   const [bod, setBod] = useState<string>("");
+
+  const [clear, setClear] = useState<string>("");
+
+  // const [formData, setFormData] = useState({
+  //   name: "",
+  //   phone: "",
+  //   password: "",
+  //   email: "",
+  //   team: "",
+  //   gender: "",
+  //   role: "",
+  //   address: "",
+  //   date_birth: "",
+  // });
 
   useEffect(() => {
     if (name && password && email) {
@@ -51,7 +66,7 @@ const AddUser = () => {
       gender,
       role,
       address,
-      bod,
+      date_birth: bod,
     };
 
     axios
@@ -62,6 +77,7 @@ const AddUser = () => {
       })
       .then((res) => {
         const { message } = res.data;
+        setClear(message);
 
         MySwal.fire({
           icon: "success",
@@ -69,6 +85,17 @@ const AddUser = () => {
           text: "berhasil menambahkan user baru",
           showCancelButton: false,
         });
+
+        Array.from(document.querySelectorAll("input")).forEach(
+          (input) => (input.value = "")
+        );
+
+        Array.from(document.querySelectorAll("select")).forEach(
+          (input) => (input.value = "DEFAULT")
+        );
+
+        let role: any = document.getElementById("input-genderMen");
+        role = { "": "" };
       })
       .catch((err) => {
         const { data } = err.response;
@@ -80,6 +107,15 @@ const AddUser = () => {
       })
       .finally(() => setLoading(false));
   };
+
+  // useEffect(() => {
+  //   if (clear === "success create user account") {
+  //     console.log("clear oke");
+  //     Array.from(document.querySelectorAll("input")).forEach(
+  //       (input) => (input.value = "")
+  //     );
+  //   }
+  // }, []);
 
   return (
     <Layout>
@@ -95,6 +131,7 @@ const AddUser = () => {
             id="input-nama"
             type="text"
             placeholder="Contoh : Andre Taulani"
+            defaultValue={name}
             onChange={(e) => setName(e.target.value)}
           />
         </div>
@@ -223,6 +260,7 @@ const AddUser = () => {
             id="btn-cancel"
             label="Menambah User"
             loading={loading || disable}
+            // onClick={() => handleClear()}
           />
         </div>
       </form>
