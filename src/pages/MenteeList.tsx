@@ -1,47 +1,67 @@
 import React, { useState, useEffect } from "react";
-import { useCookies } from "react-cookie";
 import axios from "axios";
 
-import { MenteTypes } from "../types/UserType";
 
 import Layout from "../components/Layout";
 import Navbar from "../components/Navbar";
+
+import { MenteeType } from "../types/Mentee";
+import { useCookies } from "react-cookie";
 
 import { BiEdit } from "react-icons/bi";
 import { TfiTrash } from "react-icons/tfi";
 import { GoBook } from "react-icons/go";
 
 const MenteeList = () => {
+  const [mentee, setMentee] = useState<MenteeType[]>([]);
+  const [search, setSearch] = useState<string>("");
+  const [filterClass, setFilterClass] = useState("");
+  const [filterCategory, setFilterCategory] = useState("");
+  const [filterStatus, setFilterStatus] = useState("");
   const [cookie, setCookie] = useCookies(["token", "role"]);
   const checkToken = cookie.token;
-
   const [loading, setLoading] = useState<boolean>(false);
-  const [mentees, setMentees] = useState<MenteTypes[]>([]);
 
   useEffect(() => {
-    fetchData();
+    listMentee();
   }, []);
 
-  function fetchData() {
-    setLoading(true);
+  function listMentee() {
     axios
       .get(
-        "https://virtserver.swaggerhub.com/ALFIANADSAPUTRA_1/DashboardQ/1.0.0/mentee",
+        `https://virtserver.swaggerhub.com/ALFIANADSAPUTRA_1/DashboardQ/1.0.0/mentee`,
         {
           headers: {
-            Authorization: `Bearer ${checkToken}`,
+            Authorization: `Bearer ${cookie.token}`,
           },
         }
       )
-      .then((res) => {
-        const { data } = res.data;
-        setMentees(data);
+      .then((response) => {
+        setMentee(response.data.data);
       })
-      .catch((err) => {
-        alert(err.response.toString());
-      })
-      .finally(() => setLoading(false));
+      .catch((error) => {
+        console.log(error);
+      });
   }
+
+  const handleFilterClassChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setFilterClass(event.target.value);
+  };
+
+  const handleFilterCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setFilterCategory(event.target.value);
+  };
+
+  const handleFilterStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setFilterStatus(event.target.value);
+  };
+
+  const filterMentee = mentee.filter((item) =>
+    item.name?.toLowerCase().includes(search.toLowerCase()) &&
+    (filterClass === "" || item.class === filterClass) &&
+    (filterCategory === "" || item.category === filterCategory) &&
+    (filterStatus === "" || item.status === filterStatus)
+  );
 
   return (
     <Layout>
@@ -53,6 +73,8 @@ const MenteeList = () => {
             <input
               type="text"
               placeholder="Search..."
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
               className="input-bordered input rounded-xl text-black"
             />
           </div>
@@ -61,41 +83,37 @@ const MenteeList = () => {
           </button>
         </div>
         <div className="mt-10 flex flex-wrap justify-end space-x-3">
-          <select
-            defaultValue={"DEFAULT"}
-            name="option"
-            id="input-class"
-            className="select w-1/5 max-w-xs rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
-          >
-            <option value="DEFAULT" disabled>
+
+          <select className="select w-1/5 max-w-xs rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+           value={filterClass} 
+           onChange={handleFilterClassChange}>
+            <option value="">
+
               Class
             </option>
-            <option>FE12</option>
-            <option>BE10</option>
-            <option>QE8</option>
+            <option value="FE 8">FE12</option>
+            <option value="BE 10">BE10</option>
+            <option value="QE Batch 10">QE8</option>
           </select>
-
-          <select
-            defaultValue={"DEFAULT"}
-            className="select w-1/5 max-w-xs rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
-          >
-            <option value="DEFAULT" disabled>
+          <select className="select w-1/5 max-w-xs rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+          value={filterStatus} 
+          onChange={handleFilterStatusChange}>
+            <option value="">
               Status
             </option>
-            <option>Placement</option>
-            <option>Active</option>
-            <option>Eliminated</option>
+            <option value="Placement">Placement</option>
+            <option value="Gradueted">Graduet</option>
+            <option value="Active">Active</option>
+            <option value="Eliminated">Eliminated</option>
           </select>
-
-          <select
-            defaultValue={"DEFAULT"}
-            className="select w-1/5 max-w-xs rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
-          >
-            <option value="DEFAULT" disabled>
+          <select className="select w-1/5 max-w-xs rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+          value={filterCategory} 
+          onChange={handleFilterCategoryChange}>
+            <option value="">
               Category
             </option>
-            <option>Infomatics</option>
-            <option>Non-Informatics</option>
+            <option value="IT">Infomatics</option>
+            <option value="Non-IT">Non-Informatics</option>
           </select>
           <button className="btn rounded-2xl bg-[#1F4068]">Filter</button>
         </div>
@@ -117,9 +135,9 @@ const MenteeList = () => {
               </tr>
             </thead>
             <tbody>
-              {mentees.map((mentee, index) => (
+              {filterMentee.map((mentee) => (
                 <tr key={mentee.id} className="font-semibold">
-                  <th>{index + 1}</th>
+                  <th>{mentee.id}</th>
                   <td>{mentee.name}</td>
                   <td>{mentee.class}</td>
                   <td>{mentee.status}</td>
