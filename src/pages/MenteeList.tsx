@@ -40,7 +40,7 @@ const MenteeList = () => {
         setMentee(response.data.data);
       })
       .catch((error) => {
-        alert(error.toString());
+        alert(error.response.toString());
       });
   }
 

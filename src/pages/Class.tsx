@@ -1,4 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useCookies } from "react-cookie";
+import axios from "axios";
+import moment from "moment";
+
+import { ClassType } from "../types/Mentee";
 
 import Layout from "../components/Layout";
 import Navbar from "../components/Navbar";
@@ -7,6 +12,38 @@ import { BiEdit } from "react-icons/bi";
 import { TfiTrash } from "react-icons/tfi";
 
 const Class = () => {
+  const [cookie, setCookie] = useCookies(["token", "role"]);
+  const checkToken = cookie.token;
+
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const [datas, setDatas] = useState<ClassType[]>([]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  function fetchData() {
+    setLoading(true);
+    axios
+      .get(
+        "https://virtserver.swaggerhub.com/ALFIANADSAPUTRA_1/DashboardQ/1.0.0/class",
+        {
+          headers: {
+            Authorization: `Bearer ${checkToken}`,
+          },
+        }
+      )
+      .then((res) => {
+        const { data } = res.data;
+        setDatas(data);
+      })
+      .catch((err) => {
+        alert(err.response.toString());
+      })
+      .finally(() => setLoading(false));
+  }
+
   return (
     <Layout>
       <Navbar />
@@ -26,7 +63,6 @@ const Class = () => {
         </div>
         <div className="mt-24 overflow-x-auto">
           <table className="table w-full">
-            {/* head */}
             <thead>
               <tr>
                 <th className="w-1/12 bg-[#232932] text-white">No</th>
@@ -39,66 +75,27 @@ const Class = () => {
               </tr>
             </thead>
             <tbody>
-              {/* row 1 */}
-              <tr className="font-semibold">
-                <th>1</th>
-                <td>Front End Enginner Batch 12</td>
-                <td>Jhon Doe</td>
-                <td>13-Jan-2023</td>
-                <td>14-Mar-2023</td>
-                <td>
-                  <p className="flex gap-2 font-normal">
-                    <BiEdit size={25} />
-                    Edit
-                  </p>
-                </td>
-                <td>
-                  <p className="flex gap-2 font-normal text-red-500">
-                    <TfiTrash color="red" size={25} />
-                    Delete
-                  </p>
-                </td>
-              </tr>
-              {/* row 2 */}
-              <tr className="font-semibold">
-                <th>2</th>
-                <td>Back End Enginner Batch 12</td>
-                <td>Jhon Doe</td>
-                <td>25-Jan-2023</td>
-                <td>26-Mar-2023</td>
-                <td>
-                  <p className="flex gap-2 font-normal">
-                    <BiEdit size={25} />
-                    Edit
-                  </p>
-                </td>
-                <td>
-                  <p className="flex gap-2 font-normal text-red-500">
-                    <TfiTrash color="red" size={25} />
-                    Delete
-                  </p>
-                </td>
-              </tr>
-              {/* row 3 */}
-              <tr className="font-semibold">
-                <th>3</th>
-                <td>Quality Assurance Batch 8</td>
-                <td>Jhon Doe</td>
-                <td>18-Jan-2023</td>
-                <td>19-Mar-2023</td>
-                <td>
-                  <p className="flex gap-2 font-normal">
-                    <BiEdit size={25} />
-                    Edit
-                  </p>
-                </td>
-                <td>
-                  <p className="flex gap-2 font-normal text-red-500">
-                    <TfiTrash color="red" size={25} />
-                    Delete
-                  </p>
-                </td>
-              </tr>
+              {datas.map((data, index) => (
+                <tr key={data.id} className="font-normal">
+                  <th className="font-normal">{index + 1}</th>
+                  <td>{data.name}</td>
+                  <td>{data.mentor}</td>
+                  <td>{moment(data.start_class).format("DD-MMM-YY")}</td>
+                  <td>{moment(data.end_class).format("DD-MMM-YY")}</td>
+                  <td>
+                    <p className="flex gap-2 font-normal">
+                      <BiEdit size={25} />
+                      Edit
+                    </p>
+                  </td>
+                  <td>
+                    <p className="flex gap-2 font-normal text-red-500">
+                      <TfiTrash color="red" size={25} />
+                      Delete
+                    </p>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
