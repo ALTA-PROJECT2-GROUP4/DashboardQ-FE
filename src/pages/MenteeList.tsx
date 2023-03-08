@@ -1,4 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useCookies } from "react-cookie";
+import axios from "axios";
+
+import { MenteTypes } from "../types/UserType";
 
 import Layout from "../components/Layout";
 import Navbar from "../components/Navbar";
@@ -8,6 +12,37 @@ import { TfiTrash } from "react-icons/tfi";
 import { GoBook } from "react-icons/go";
 
 const MenteeList = () => {
+  const [cookie, setCookie] = useCookies(["token", "role"]);
+  const checkToken = cookie.token;
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const [mentees, setMentees] = useState<MenteTypes[]>([]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  function fetchData() {
+    setLoading(true);
+    axios
+      .get(
+        "https://virtserver.swaggerhub.com/ALFIANADSAPUTRA_1/DashboardQ/1.0.0/mentee",
+        {
+          headers: {
+            Authorization: `Bearer ${checkToken}`,
+          },
+        }
+      )
+      .then((res) => {
+        const { data } = res.data;
+        setMentees(data);
+      })
+      .catch((err) => {
+        alert(err.response.toString());
+      })
+      .finally(() => setLoading(false));
+  }
+
   return (
     <Layout>
       <Navbar />
@@ -26,24 +61,37 @@ const MenteeList = () => {
           </button>
         </div>
         <div className="mt-10 flex flex-wrap justify-end space-x-3">
-          <select className="select w-1/5 max-w-xs rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-            <option disabled selected>
+          <select
+            defaultValue={"DEFAULT"}
+            name="option"
+            id="input-class"
+            className="select w-1/5 max-w-xs rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+          >
+            <option value="DEFAULT" disabled>
               Class
             </option>
             <option>FE12</option>
             <option>BE10</option>
             <option>QE8</option>
           </select>
-          <select className="select w-1/5 max-w-xs rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-            <option disabled selected>
+
+          <select
+            defaultValue={"DEFAULT"}
+            className="select w-1/5 max-w-xs rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+          >
+            <option value="DEFAULT" disabled>
               Status
             </option>
             <option>Placement</option>
             <option>Active</option>
             <option>Eliminated</option>
           </select>
-          <select className="select w-1/5 max-w-xs rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-            <option disabled selected>
+
+          <select
+            defaultValue={"DEFAULT"}
+            className="select w-1/5 max-w-xs rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+          >
+            <option value="DEFAULT" disabled>
               Category
             </option>
             <option>Infomatics</option>
@@ -51,6 +99,7 @@ const MenteeList = () => {
           </select>
           <button className="btn rounded-2xl bg-[#1F4068]">Filter</button>
         </div>
+
         <div className="mt-24 overflow-x-auto">
           <table className="table w-full">
             {/* head */}
@@ -68,114 +117,34 @@ const MenteeList = () => {
               </tr>
             </thead>
             <tbody>
-              {/* row 1 */}
-              <tr className="font-semibold">
-                <th>1</th>
-                <td>Jhon Doe</td>
-                <td>FE12</td>
-                <td>Active</td>
-                <td>Non-Infomatic</td>
-                <td>male</td>
-                <td>
-                  <p className="flex gap-2 font-normal">
-                    <GoBook size={25} />
-                    Log
-                  </p>
-                </td>
-                <td>
-                  <p className="flex gap-2 font-normal">
-                    <BiEdit size={25} />
-                    Edit
-                  </p>
-                </td>
-                <td>
-                  <p className="flex gap-2 font-normal text-red-500">
-                    <TfiTrash color="red" size={25} />
-                    Delete
-                  </p>
-                </td>
-              </tr>
-              {/* row 2 */}
-              <tr className="font-semibold">
-                <th>2</th>
-                <td>Jhon Doe</td>
-                <td>BE12</td>
-                <td>Graduet</td>
-                <td>Non-Infomatic</td>
-                <td>male</td>
-                <td>
-                  <p className="flex gap-2 font-normal">
-                    <GoBook size={25} />
-                    Log
-                  </p>
-                </td>
-                <td>
-                  <p className="flex gap-2 font-normal">
-                    <BiEdit size={25} />
-                    Edit
-                  </p>
-                </td>
-                <td>
-                  <p className="flex gap-2 font-normal text-red-500">
-                    <TfiTrash color="red" size={25} />
-                    Delete
-                  </p>
-                </td>
-              </tr>
-              {/* row 3 */}
-              <tr className="font-semibold">
-                <th>3</th>
-                <td>Jhon Doe</td>
-                <td>QE12</td>
-                <td>Eliminated</td>
-                <td>Infomatic</td>
-                <td>Female</td>
-                <td>
-                  <p className="flex gap-2 font-normal">
-                    <GoBook size={25} />
-                    Log
-                  </p>
-                </td>
-                <td>
-                  <p className="flex gap-2 font-normal">
-                    <BiEdit size={25} />
-                    Edit
-                  </p>
-                </td>
-                <td>
-                  <p className="flex gap-2 font-normal text-red-500">
-                    <TfiTrash color="red" size={25} />
-                    Delete
-                  </p>
-                </td>
-              </tr>
-              {/* row 4 */}
-              <tr className="font-semibold">
-                <th>4</th>
-                <td>Jhon Doe</td>
-                <td>FE12</td>
-                <td>Placement</td>
-                <td>Infomatic</td>
-                <td>Female</td>
-                <td>
-                  <p className="flex gap-2 font-normal">
-                    <GoBook size={25} />
-                    Log
-                  </p>
-                </td>
-                <td>
-                  <p className="flex gap-2 font-normal">
-                    <BiEdit size={25} />
-                    Edit
-                  </p>
-                </td>
-                <td>
-                  <p className="flex gap-2 font-normal text-red-500">
-                    <TfiTrash color="red" size={25} />
-                    Delete
-                  </p>
-                </td>
-              </tr>
+              {mentees.map((mentee, index) => (
+                <tr key={mentee.id} className="font-semibold">
+                  <th>{index + 1}</th>
+                  <td>{mentee.name}</td>
+                  <td>{mentee.class}</td>
+                  <td>{mentee.status}</td>
+                  <td>{mentee.category}</td>
+                  <td>{mentee.gender}</td>
+                  <td>
+                    <p className="flex gap-2 font-normal">
+                      <GoBook size={25} />
+                      Log
+                    </p>
+                  </td>
+                  <td>
+                    <p className="flex gap-2 font-normal">
+                      <BiEdit size={25} />
+                      Edit
+                    </p>
+                  </td>
+                  <td>
+                    <p className="flex gap-2 font-normal text-red-500">
+                      <TfiTrash color="red" size={25} />
+                      Delete
+                    </p>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

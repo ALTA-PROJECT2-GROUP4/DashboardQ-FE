@@ -146,7 +146,7 @@ const AddUser = () => {
             defaultValue={"DEFAULT"}
             id="input-role"
             name="option"
-            className="border-navy select-bordered select w-7/12 border-2 border-zinc-400  bg-[#EFFFFD] font-normal lg:w-7/12"
+            className="select-bordered select w-7/12 border-2 border-zinc-400  bg-[#EFFFFD] font-normal lg:w-7/12"
             onChange={(e) => setRole(e.target.value)}
           >
             <option value="DEFAULT" disabled>
