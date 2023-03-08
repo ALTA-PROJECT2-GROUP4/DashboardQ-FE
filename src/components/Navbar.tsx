@@ -24,11 +24,12 @@ const Navbar = () => {
   const checkRole = cookie.role;
   const checkName = cookie.name;
 
-  const [loading, setLoading] = useState<boolean>(false);
-  const [disable, setDisable] = useState<boolean>(true);
+  // const [loading, setLoading] = useState<boolean>(false);
+  // const [disable, setDisable] = useState<boolean>(true);
 
   const handleLogout = async () => {
     MySwal.fire({
+      icon: "warning",
       title: " Ingin Logout ? ",
       text: " Pilih button Logout untuk lanjut ",
       cancelButtonText: "Kembali",
