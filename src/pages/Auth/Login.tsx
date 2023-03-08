@@ -41,7 +41,7 @@ const Login = () => {
     };
 
     axios
-      .post("http://54.179.232.197/login", body)
+      .post("https://projectfebe.online/login", body)
       .then((res) => {
         const { message, token } = res.data;
         const { name, email, role } = res.data.data;
