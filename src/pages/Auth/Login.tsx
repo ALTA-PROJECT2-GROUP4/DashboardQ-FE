@@ -55,9 +55,9 @@ const Login = () => {
         MySwal.fire({
           icon: "success",
           title: message,
-          text: "login berhasil",
+          text: "Terimakasih telah melakukan Login",
           showCancelButton: false,
-          confirmButtonText: "Lanjut",
+          confirmButtonText: "Masuk Dashboard",
         }).then((lanjut) => {
           if (lanjut.isConfirmed) {
             navigate("/dashboard");
