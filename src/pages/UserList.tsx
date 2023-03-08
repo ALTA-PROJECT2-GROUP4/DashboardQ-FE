@@ -95,13 +95,10 @@ const UserList = () => {
                     </p>
                   </td>
                   <td>
-                    <button
-                      className="flex gap-2 font-normal text-red-500"
-                      
-                    >
+                    <p className="flex gap-2 font-normal text-red-500">
                       <TfiTrash color="red" size={25} />
                       Delete
-                    </button>
+                    </p>
                   </td>
                 </tr>
               ))}

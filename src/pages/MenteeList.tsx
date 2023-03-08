@@ -1,13 +1,66 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 import Layout from "../components/Layout";
 import Navbar from "../components/Navbar";
+
+import { MenteeType } from "../types/Mentee";
+import { useCookies } from "react-cookie";
 
 import { BiEdit } from "react-icons/bi";
 import { TfiTrash } from "react-icons/tfi";
 import { GoBook } from "react-icons/go";
 
 const MenteeList = () => {
+  const [mentee, setMentee] = useState<MenteeType[]>([]);
+  const [search, setSearch] = useState<string>("");
+  const [filterClass, setFilterClass] = useState("");
+  const [filterCategory, setFilterCategory] = useState("");
+  const [filterStatus, setFilterStatus] = useState("");
+  const [cookie, setCookie] = useCookies(["token"]);
+
+  useEffect(() => {
+    listMentee();
+  }, []);
+
+  function listMentee() {
+    axios
+      .get(
+        `https://virtserver.swaggerhub.com/ALFIANADSAPUTRA_1/DashboardQ/1.0.0/mentee`,
+        {
+          headers: {
+            Authorization: `Bearer ${cookie.token}`,
+          },
+        }
+      )
+      .then((response) => {
+        setMentee(response.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  const handleFilterClassChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setFilterClass(event.target.value);
+  };
+
+  const handleFilterCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setFilterCategory(event.target.value);
+  };
+
+  const handleFilterStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setFilterStatus(event.target.value);
+  };
+
+  const filterMentee = mentee.filter((item) =>
+    item.name?.toLowerCase().includes(search.toLowerCase()) &&
+    (filterClass === "" || item.class === filterClass) &&
+    (filterCategory === "" || item.category === filterCategory) &&
+    (filterStatus === "" || item.status === filterStatus)
+  );
+ 
+
   return (
     <Layout>
       <Navbar />
@@ -18,6 +71,8 @@ const MenteeList = () => {
             <input
               type="text"
               placeholder="Search..."
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
               className="input-bordered input rounded-xl text-black"
             />
           </div>
@@ -26,28 +81,35 @@ const MenteeList = () => {
           </button>
         </div>
         <div className="mt-10 flex flex-wrap justify-end space-x-3">
-          <select className="select w-1/5 max-w-xs rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-            <option disabled selected>
+          <select className="select w-1/5 max-w-xs rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+           value={filterClass} 
+           onChange={handleFilterClassChange}>
+            <option value="">
               Class
             </option>
-            <option>FE12</option>
-            <option>BE10</option>
-            <option>QE8</option>
+            <option value="FE 8">FE12</option>
+            <option value="BE 10">BE10</option>
+            <option value="QE Batch 10">QE8</option>
           </select>
-          <select className="select w-1/5 max-w-xs rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-            <option disabled selected>
+          <select className="select w-1/5 max-w-xs rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+          value={filterStatus} 
+          onChange={handleFilterStatusChange}>
+            <option value="">
               Status
             </option>
-            <option>Placement</option>
-            <option>Active</option>
-            <option>Eliminated</option>
+            <option value="Placement">Placement</option>
+            <option value="Gradueted">Graduet</option>
+            <option value="Active">Active</option>
+            <option value="Eliminated">Eliminated</option>
           </select>
-          <select className="select w-1/5 max-w-xs rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-            <option disabled selected>
+          <select className="select w-1/5 max-w-xs rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+          value={filterCategory} 
+          onChange={handleFilterCategoryChange}>
+            <option value="">
               Category
             </option>
-            <option>Infomatics</option>
-            <option>Non-Informatics</option>
+            <option value="IT">Infomatics</option>
+            <option value="Non-IT">Non-Informatics</option>
           </select>
           <button className="btn rounded-2xl bg-[#1F4068]">Filter</button>
         </div>
@@ -68,114 +130,34 @@ const MenteeList = () => {
               </tr>
             </thead>
             <tbody>
-              {/* row 1 */}
-              <tr className="font-semibold">
-                <th>1</th>
-                <td>Jhon Doe</td>
-                <td>FE12</td>
-                <td>Active</td>
-                <td>Non-Infomatic</td>
-                <td>male</td>
-                <td>
-                  <p className="flex gap-2 font-normal">
-                    <GoBook size={25} />
-                    Log
-                  </p>
-                </td>
-                <td>
-                  <p className="flex gap-2 font-normal">
-                    <BiEdit size={25} />
-                    Edit
-                  </p>
-                </td>
-                <td>
-                  <p className="flex gap-2 font-normal text-red-500">
-                    <TfiTrash color="red" size={25} />
-                    Delete
-                  </p>
-                </td>
-              </tr>
-              {/* row 2 */}
-              <tr className="font-semibold">
-                <th>2</th>
-                <td>Jhon Doe</td>
-                <td>BE12</td>
-                <td>Graduet</td>
-                <td>Non-Infomatic</td>
-                <td>male</td>
-                <td>
-                  <p className="flex gap-2 font-normal">
-                    <GoBook size={25} />
-                    Log
-                  </p>
-                </td>
-                <td>
-                  <p className="flex gap-2 font-normal">
-                    <BiEdit size={25} />
-                    Edit
-                  </p>
-                </td>
-                <td>
-                  <p className="flex gap-2 font-normal text-red-500">
-                    <TfiTrash color="red" size={25} />
-                    Delete
-                  </p>
-                </td>
-              </tr>
-              {/* row 3 */}
-              <tr className="font-semibold">
-                <th>3</th>
-                <td>Jhon Doe</td>
-                <td>QE12</td>
-                <td>Eliminated</td>
-                <td>Infomatic</td>
-                <td>Female</td>
-                <td>
-                  <p className="flex gap-2 font-normal">
-                    <GoBook size={25} />
-                    Log
-                  </p>
-                </td>
-                <td>
-                  <p className="flex gap-2 font-normal">
-                    <BiEdit size={25} />
-                    Edit
-                  </p>
-                </td>
-                <td>
-                  <p className="flex gap-2 font-normal text-red-500">
-                    <TfiTrash color="red" size={25} />
-                    Delete
-                  </p>
-                </td>
-              </tr>
-              {/* row 4 */}
-              <tr className="font-semibold">
-                <th>4</th>
-                <td>Jhon Doe</td>
-                <td>FE12</td>
-                <td>Placement</td>
-                <td>Infomatic</td>
-                <td>Female</td>
-                <td>
-                  <p className="flex gap-2 font-normal">
-                    <GoBook size={25} />
-                    Log
-                  </p>
-                </td>
-                <td>
-                  <p className="flex gap-2 font-normal">
-                    <BiEdit size={25} />
-                    Edit
-                  </p>
-                </td>
-                <td>
-                  <p className="flex gap-2 font-normal text-red-500">
-                    <TfiTrash color="red" size={25} />
-                    Delete
-                  </p>
-                </td>
-              </tr>
+              {filterMentee.map((mentee) => (
+                <tr key={mentee.id} className="font-semibold">
+                  <th>{mentee.id}</th>
+                  <td>{mentee.name}</td>
+                  <td>{mentee.class}</td>
+                  <td>{mentee.status}</td>
+                  <td>{mentee.category}</td>
+                  <td>{mentee.gender}</td>
+                  <td>
+                    <p className="flex gap-2 font-normal">
+                      <GoBook size={25} />
+                      Log
+                    </p>
+                  </td>
+                  <td>
+                    <p className="flex gap-2 font-normal">
+                      <BiEdit size={25} />
+                      Edit
+                    </p>
+                  </td>
+                  <td>
+                    <p className="flex gap-2 font-normal text-red-500">
+                      <TfiTrash color="red" size={25} />
+                      Delete
+                    </p>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
