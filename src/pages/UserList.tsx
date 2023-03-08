@@ -12,6 +12,7 @@ import { TfiTrash } from "react-icons/tfi";
 
 const UserList = () => {
   const [users, setUsers] = useState<UserType[]>([]);
+  const [search, setSearch] = useState<string>("");
   const [cookie, setCookie] = useCookies(["token"]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -34,6 +35,20 @@ const UserList = () => {
       });
   }
 
+  const filteredUser = users.filter((item) =>
+    item.name?.toLowerCase().includes(search.toLowerCase())
+  );
+
+  const deleteUser = (id: number) => {
+    axios
+      .delete(`https://projectfebe.online/users/${id}`)
+      .then(() => {
+        const updatedUsers = users.filter((user) => user.id !== id);
+        setUsers(updatedUsers);
+      })
+      .catch((error) => console.log(error));
+  };
+
   return (
     <Layout>
       <Navbar />
@@ -44,6 +59,8 @@ const UserList = () => {
             <input
               type="text"
               placeholder="Search..."
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
               className="input-bordered input rounded-xl text-black"
             />
           </div>
@@ -64,7 +81,7 @@ const UserList = () => {
               </tr>
             </thead>
             <tbody>
-              {users.map((user) => (
+              {filteredUser.map((user) => (
                 <tr key={user.id} className="font-semibold">
                   <th>{user.id}</th>
                   <td>{user.name}</td>
@@ -78,10 +95,13 @@ const UserList = () => {
                     </p>
                   </td>
                   <td>
-                    <p className="flex gap-2 font-normal text-red-500">
+                    <button
+                      className="flex gap-2 font-normal text-red-500"
+                      
+                    >
                       <TfiTrash color="red" size={25} />
                       Delete
-                    </p>
+                    </button>
                   </td>
                 </tr>
               ))}
