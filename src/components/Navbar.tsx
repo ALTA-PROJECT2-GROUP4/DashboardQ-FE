@@ -1,11 +1,18 @@
-import React, { FC, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useCookies } from "react-cookie";
+
+import withReactContent from "sweetalert2-react-content";
+import { handleAuth } from "../utils/redux/reducer/reducer";
+import Swal from "../utils/Swal";
 
 import Logo from "../assets/navbar.svg";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const MySwal = withReactContent(Swal);
   const [cookie, , removeCookie] = useCookies([
     "token",
     "name",
@@ -19,6 +26,27 @@ const Navbar = () => {
 
   const [loading, setLoading] = useState<boolean>(false);
   const [disable, setDisable] = useState<boolean>(true);
+
+  const handleLogout = async () => {
+    MySwal.fire({
+      title: " Ingin Logout ? ",
+      text: " Pilih button Logout untuk lanjut ",
+      cancelButtonText: "Kembali",
+      confirmButtonText: "Logout",
+    }).then((logout) => {
+      if (logout.isConfirmed) {
+        dispatch(handleAuth(false));
+        removeCookie("token");
+        removeCookie("name");
+        removeCookie("email");
+        removeCookie("role");
+
+        navigate("/");
+      } else if (logout.isDismissed) {
+        navigate("/dashboard");
+      }
+    });
+  };
 
   return (
     <div className="navbar sticky top-0 left-0 z-50 flex justify-between bg-[#395B64] py-4 shadow-[0px_4px_8px_0px_rgba(0,0,0,0.3)]">
@@ -76,7 +104,9 @@ const Navbar = () => {
             className="dropdown-content menu rounded-box mt-3 w-44 bg-color2 p-2 text-[16px] font-medium text-color1 shadow"
           >
             <li className="p-0 leading-none">
-              <Link to="/dashboard"> Logout </Link>
+              <button id="btn-logout" onClick={handleLogout}>
+                Logout
+              </button>
             </li>
           </ul>
         </div>
