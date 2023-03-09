@@ -1,13 +1,118 @@
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import Layout from "../components/Layout";
 import Navbar from "../components/Navbar";
 
+import { useCookies } from "react-cookie";
+import Swal from "../utils/Swal";
+import { string } from "prop-types";
+import withReactContent from "sweetalert2-react-content";
+
 const AddMente = () => {
+  const navigate = useNavigate();
+  const [cookie, setCookie] = useCookies(["token"]);
+  const checkToken = cookie.token;
+  const MySwal = withReactContent(Swal);
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const [disabled, setDisabled] = useState<boolean>(true);
+
+  const [name, setName] = useState<string>("");
+  const [nameEdata, setNameEdata] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [bod, setBod] = useState<string>("");
+  const [address, setAddress] = useState<string>("");
+  const [homeAddress, setHomeAddress] = useState<string>("");
+  const [gender, setGender] = useState<string>("");
+  const [telegram, setTelegram] = useState<string>("");
+  const [phone, setPhone] = useState<string>("");
+  const [phoneEdata, setPhoneEdata] = useState<string>("");
+  const [cls, setCls] = useState<string>(""); //class
+  const [status, setStatus] = useState<string>("");
+  const [statusEdata, setStatusEdata] = useState<string>("");
+  const [category, setCategory] = useState<string>("");
+  const [major, setMajor] = useState<string>("");
+  const [graduate, setGraduate] = useState<string>("");
+
+  const [clear, setClear] = useState<string>("");
+
+  useEffect(() => {
+    if (name  && cls && status && category && gender) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
+  }, [name, cls, status, category, gender])
+
+  const handleAddMentee = (e: React.FormEvent<HTMLFormElement>) => {
+    setLoading(true);
+    e.preventDefault();
+
+    const body = {
+      class: cls,
+      name,
+      nameEdata,
+      email,
+      major,
+      phone,
+      phoneEdata,
+      status,
+      statusEdata,
+      gender,
+      address,
+      graduate,
+      telegram,
+      category,
+      homeAddress,
+      date_birth: bod,
+    };
+
+    axios
+      .post(
+        `https://virtserver.swaggerhub.com/ALFIANADSAPUTRA_1/DashboardQ/1.0.0/mentee`,
+        body,
+        {
+          headers: {
+            Authorization: `Bearer ${checkToken}`,
+          },
+        }
+      )
+      .then((response) => {
+        const { message } = response.data;
+        setClear(message);
+        MySwal.fire({
+          icon: "success",
+          title: message,
+          text: "success add new mentee",
+          showCancelButton: false,
+        });
+        Array.from(document.querySelectorAll("input")).forEach(
+          (input) => (input.value = "")
+        );
+
+        Array.from(document.querySelectorAll("select")).forEach(
+          (input) => (input.value = "DEFAULT")
+        );
+      })
+      .catch((error) => {
+        const { data } = error.response;
+        MySwal.fire({
+          icon: "error",
+          title: data.message,
+          text: "failed add new mentee",
+        });
+      })
+      .finally(() => setLoading(false));
+  };
+
   return (
     <Layout>
       <Navbar />
-      <div className="pl-20">
+      <form onSubmit={(e) => handleAddMentee(e)} className="pl-20">
         <p className="my-14 text-[32px] font-medium text-color1">
           Menambahkan Mente
         </p>
@@ -18,6 +123,8 @@ const AddMente = () => {
             id="input-nama"
             type="text"
             placeholder="Contoh : Andre Taulani"
+            defaultValue={name}
+            onChange={(e) => setName(e.target.value)}
           />
         </div>
 
@@ -27,6 +134,7 @@ const AddMente = () => {
             id="input-nama"
             type="text"
             placeholder="Contoh : 089678876654"
+            onChange={(e) => setPhone(e.target.value)}
           />
         </div>
 
@@ -36,6 +144,7 @@ const AddMente = () => {
             id="input-nama"
             type="text"
             placeholder="Contoh : 0888988876676"
+            onChange={(e) => setTelegram(e.target.value)}
           />
         </div>
 
@@ -45,6 +154,7 @@ const AddMente = () => {
             id="input-nama"
             type="text"
             placeholder="Contoh : andretaulani11@gmail.com"
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
 
@@ -55,6 +165,7 @@ const AddMente = () => {
             type="date"
             placeholder={"test"}
             className="input-border input h-12 w-7/12 max-w-full rounded-lg border-2 border-zinc-400 bg-[#EFFFFD] px-4 py-0 font-normal text-color1 placeholder-slate-400 md:text-[14px] lg:text-[15px]"
+            onChange={(e) => setBod(e.target.value)}
           />
         </div>
 
@@ -65,6 +176,7 @@ const AddMente = () => {
             id="input-role"
             name="option"
             className="select-bordered select w-7/12 border-2 border-zinc-400 bg-[#EFFFFD]  text-[16px] font-normal lg:w-7/12"
+            onChange={(e) => setStatus(e.target.value)}
           >
             <option value="DEFAULT" disabled>
               Pilih Salah Satu
@@ -82,11 +194,16 @@ const AddMente = () => {
             id="input-role"
             name="option"
             className="select-bordered select w-7/12 border-2 border-zinc-400 bg-[#EFFFFD]  text-[16px] font-normal lg:w-7/12"
+            onChange={(e) => setCls(e.target.value)}
           >
             <option value="DEFAULT" disabled>
               Pilih Salah Satu
             </option>
-            <option value="FE Batch 12">FE Batch 12</option>
+            <option value="BE Batch 10">BE Batch 10</option>
+            <option value="BE Batch 9">BE Batch 9</option>
+            <option value="FE Batch 9">FE Batch 9</option>
+            <option value="FE Batch 8">FE Batch 8</option>
+            <option value="QE Batch 10">QE Batch 10</option>
           </select>
         </div>
 
@@ -97,7 +214,8 @@ const AddMente = () => {
               type="radio"
               name="radio-2"
               className="radio-primary radio"
-              checked
+              value="men"
+              onChange={(e) => setGender(e.target.value)}
             />
             <p className="text-[15px]">Men</p>
           </div>
@@ -107,6 +225,8 @@ const AddMente = () => {
               type="radio"
               name="radio-2"
               className="radio-primary radio"
+              value="women"
+              onChange={(e) => setGender(e.target.value)}
             />
             <p className="text-[15px]">Women</p>
           </div>
@@ -118,6 +238,7 @@ const AddMente = () => {
             id="input-nama"
             type="text"
             placeholder="Contoh : Jl. Hayam Wuruk no.12 Tingal, Garum, Blitar"
+            onChange={(e) => setAddress(e.target.value)}
           />
         </div>
 
@@ -127,6 +248,7 @@ const AddMente = () => {
             id="input-nama"
             type="text"
             placeholder="Contoh : Jl. Nusantara no.03 Kendalrejo, Talun, Blitar"
+            onChange={(e) => setHomeAddress(e.target.value)}
           />
         </div>
 
@@ -140,6 +262,8 @@ const AddMente = () => {
             id="input-nama"
             type="text"
             placeholder="Contoh : Joko Susilo"
+            defaultValue={nameEdata}
+            onChange={(e) => setNameEdata(e.target.value)}
           />
         </div>
 
@@ -149,6 +273,7 @@ const AddMente = () => {
             id="input-nama"
             type="text"
             placeholder="Contoh : 089678876654"
+            onChange={(e) => setPhoneEdata(e.target.value)}
           />
         </div>
 
@@ -159,6 +284,7 @@ const AddMente = () => {
             id="input-role"
             name="option"
             className="select-bordered select w-7/12 border-2 border-zinc-400 bg-[#EFFFFD]  text-[16px] font-normal lg:w-7/12"
+            onChange={(e) => setStatusEdata(e.target.value)}
           >
             <option value="DEFAULT" disabled>
               Pilih Salah Satu
@@ -180,7 +306,8 @@ const AddMente = () => {
               type="radio"
               name="radio-1"
               className="radio-primary radio"
-              checked
+              value="Informatic"
+              onChange={(e) => setCategory(e.target.value)}
             />
             <p className="text-[15px]">Informatic</p>
           </div>
@@ -190,6 +317,8 @@ const AddMente = () => {
               type="radio"
               name="radio-1"
               className="radio-primary radio"
+              value="Non-Informatic"
+              onChange={(e) => setCategory(e.target.value)}
             />
             <p className="text-[15px]">Non-Informatic</p>
           </div>
@@ -201,6 +330,7 @@ const AddMente = () => {
             id="input-major"
             type="text"
             placeholder="Contoh : Magister"
+            onChange={(e) => setMajor(e.target.value)}
           />
         </div>
 
@@ -210,14 +340,24 @@ const AddMente = () => {
             id="input-graduate"
             type="text"
             placeholder="Contoh : Teknik Elektro"
+            onChange={(e) => setGraduate(e.target.value)}
           />
         </div>
 
         <div className="mt-14 mb-20 flex gap-5">
-          <CustomButton id="btn-cancel" label="Kembali" />
-          <CustomButton id="btn-cancel" label="Menambah Mente" />
+          <CustomButton
+            id="btn-cancel"
+            label="Kembali"
+            onClick={() => navigate("/mente")}
+          />
+          <CustomButton
+            id="btn-cancel"
+            label="Menambah Mente"
+            type="submit"
+            loading={loading || disabled}
+          />
         </div>
-      </div>
+      </form>
     </Layout>
   );
 };

@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 import Layout from "../components/Layout";
 import Navbar from "../components/Navbar";
@@ -9,6 +10,7 @@ import { BsMortarboard } from "react-icons/bs";
 import { IoIosRepeat } from "react-icons/io";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   return (
     <Layout>
       <Navbar />

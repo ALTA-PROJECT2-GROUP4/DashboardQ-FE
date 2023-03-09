@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "../utils/Swal";
 import axios from "axios";
 
 
@@ -7,20 +9,32 @@ import Navbar from "../components/Navbar";
 
 import { MenteeType } from "../types/Mentee";
 import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 
 import { BiEdit } from "react-icons/bi";
 import { TfiTrash } from "react-icons/tfi";
 import { GoBook } from "react-icons/go";
 
 const MenteeList = () => {
+  const navigate = useNavigate();
+  const MySwal = withReactContent(Swal);
   const [mentee, setMentee] = useState<MenteeType[]>([]);
   const [search, setSearch] = useState<string>("");
   const [filterClass, setFilterClass] = useState("");
   const [filterCategory, setFilterCategory] = useState("");
   const [filterStatus, setFilterStatus] = useState("");
   const [cookie, setCookie] = useCookies(["token", "role"]);
-  const checkToken = cookie.token;
+  const checkRole = cookie.role;
   const [loading, setLoading] = useState<boolean>(false);
+
+  const handleUser = () => {
+    MySwal.fire({
+      icon: "error",
+      title: "Akses Ditolak",
+      text: "Tidak Bisa Menambah User Baru",
+      showCancelButton: false,
+    });
+  };
 
   useEffect(() => {
     listMentee();
@@ -38,6 +52,7 @@ const MenteeList = () => {
       )
       .then((response) => {
         setMentee(response.data.data);
+        console.log("datas :", response.data.data)
       })
       .catch((error) => {
         console.log(error);
@@ -78,7 +93,11 @@ const MenteeList = () => {
               className="input-bordered input rounded-xl text-black"
             />
           </div>
-          <button className="btn rounded-2xl bg-[#1F4068]">
+          <button 
+          onClick={() => 
+          checkRole === "admin" && "user" ? navigate("/addmente") : handleUser()
+          }
+          className="btn rounded-2xl bg-[#1F4068]">
             Add New Mentee
           </button>
         </div>
