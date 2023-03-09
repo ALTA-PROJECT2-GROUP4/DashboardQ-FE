@@ -9,7 +9,6 @@ import Navbar from "../components/Navbar";
 
 import { MenteeType } from "../types/Mentee";
 import { useCookies } from "react-cookie";
-import { useNavigate } from "react-router-dom";
 
 import { BiEdit } from "react-icons/bi";
 import { TfiTrash } from "react-icons/tfi";
@@ -173,7 +172,7 @@ const MenteeList = () => {
                       Log
                     </p>
                   </td>
-                  <td onClick={() => navigate(`/edituser/${mentee.id}`)}>
+                  <td onClick={() => navigate(`/editmente/${mentee.id}`)}>
                     <p className="flex gap-2 font-normal">
                       <BiEdit size={25} />
                       Edit
