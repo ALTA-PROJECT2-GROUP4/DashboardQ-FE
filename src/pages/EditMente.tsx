@@ -52,7 +52,7 @@ const EditMente = () => {
     } else {
       setDisable(true);
     }
-  })
+  }, [name, category, gender, address, cls, status])
 
   function fetchData() {
     setLoading(true);
@@ -110,7 +110,7 @@ const EditMente = () => {
           text: "Successfully update data Mentee",
           showCancelButton: false,
         });
-        navigate("/mente");
+        // navigate("/mente");
         setSubmit({});
       })
       .catch((error) => {
@@ -167,7 +167,7 @@ const EditMente = () => {
             type="text"
             placeholder="Contoh : 0888988876676"
             defaultValue={telegram}
-            onChange={(e) => handleChange(e.target.value, "email")}
+            onChange={(e) => handleChange(e.target.value, "telegram")}
           />
         </div>
 
@@ -197,7 +197,7 @@ const EditMente = () => {
         <div className="mt-5 flex items-center text-[16px] font-medium text-color1 md:w-7/12 md:gap-4 lg:w-4/12 lg:gap-9">
           <p className="w-32">Status :</p>
           <select
-            defaultValue={"DEFAULT"}
+            defaultValue={status}
             id="input-role"
             name="option"
             onChange={(e) => handleChange(e.target.value, "status")}
@@ -235,6 +235,7 @@ const EditMente = () => {
               type="radio"
               name="radio-2"
               className="radio-primary radio"
+              defaultValue={gender}
               onChange={(e) => handleChange(e.target.value, "gender")}
             />
             <p className="text-[15px]">Men</p>
@@ -245,6 +246,7 @@ const EditMente = () => {
               type="radio"
               name="radio-2"
               className="radio-primary radio"
+              defaultValue={gender}
               onChange={(e) => handleChange(e.target.value, "gender")}
             />
             <p className="text-[15px]">Women</p>
@@ -267,7 +269,8 @@ const EditMente = () => {
             id="input-nama"
             type="text"
             placeholder="Contoh : Jl. Nusantara no.03 Kendalrejo, Talun, Blitar"
-            onChange={(e) => handleChange(e.target.value, "address")}
+            defaultValue={homeAddress}
+            onChange={(e) => handleChange(e.target.value, "homeAddress")}
           />
         </div>
 
@@ -282,7 +285,7 @@ const EditMente = () => {
             type="text"
             placeholder="Contoh : Joko Susilo"
             defaultValue={nameEdata}
-            onChange={(e) => handleChange(e.target.value, "name")}
+            onChange={(e) => handleChange(e.target.value, "nameEme")}
           />
         </div>
 
@@ -293,7 +296,7 @@ const EditMente = () => {
             type="text"
             placeholder="Contoh : 089678876654"
             defaultValue={phoneEdata}
-            onChange={(e) => handleChange(e.target.value, "phone")}
+            onChange={(e) => handleChange(e.target.value, "phoneEme")}
           />
         </div>
 
@@ -303,8 +306,8 @@ const EditMente = () => {
             defaultValue={"DEFAULT"}
             id="input-role"
             name="option"
-            onChange={(e) => handleChange(e.target.value, "status")}
             className="select-bordered select w-7/12 border-2 border-zinc-400 bg-[#EFFFFD]  text-[16px] font-normal lg:w-7/12"
+            onChange={(e) => handleChange(e.target.value, "statusEme")}
           >
             <option value="DEFAULT" disabled>
               Pilih Salah Satu
@@ -337,6 +340,8 @@ const EditMente = () => {
               type="radio"
               name="radio-1"
               className="radio-primary radio"
+              value={category}
+              onChange={(e) => handleChange(e.target.value, "category")}
             />
             <p className="text-[15px]">Non-Informatic</p>
           </div>
@@ -348,6 +353,8 @@ const EditMente = () => {
             id="input-major"
             type="text"
             placeholder="Contoh : Magister"
+            defaultValue={major}
+            onChange={(e) => handleChange(e.target.value, "major")}
           />
         </div>
 
@@ -357,6 +364,8 @@ const EditMente = () => {
             id="input-graduate"
             type="text"
             placeholder="Contoh : Teknik Elektro"
+            defaultValue={graduate}
+            onChange={(e) => handleChange(e.target.value, "graduate")}
           />
         </div>
 
