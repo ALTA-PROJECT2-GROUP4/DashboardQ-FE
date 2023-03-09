@@ -46,12 +46,12 @@ const AddUser = () => {
   // });
 
   useEffect(() => {
-    if (name && password && email) {
+    if (name && password && email && role) {
       setDisale(false);
     } else {
       setDisale(true);
     }
-  }, [name, password, email]);
+  }, [name, password, email, role]);
 
   const handleAdd = (e: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
@@ -126,7 +126,9 @@ const AddUser = () => {
         </p>
 
         <div className="flex  items-center gap-4 text-[16px] font-medium text-color1">
-          <p className="w-24">Nama :</p>
+          <p className="w-24">
+            <span className="text-red-500">*</span> Nama :
+          </p>
           <CustomInput
             id="input-nama"
             type="text"
@@ -147,7 +149,9 @@ const AddUser = () => {
         </div>
 
         <div className="mt-5 flex items-center text-[16px] font-medium text-color1 md:w-7/12 md:gap-0 lg:w-4/12 lg:gap-4">
-          <p className="w-28">Password :</p>
+          <p className="w-28">
+            <span className="text-red-500">*</span> Password :
+          </p>
           <CustomInput
             id="input-password"
             type="text"
@@ -157,7 +161,9 @@ const AddUser = () => {
         </div>
 
         <div className="mt-5 flex items-center gap-4 text-[16px] font-medium text-color1">
-          <p className="w-24">E - mail :</p>
+          <p className="w-24">
+            <span className="text-red-500">*</span> E - mail :
+          </p>
           <CustomInput
             id="input-email"
             type="text"
@@ -178,7 +184,9 @@ const AddUser = () => {
         </div>
 
         <div className="mt-5 flex items-center text-[16px] font-medium text-color1 md:w-7/12 md:gap-4 lg:w-4/12 lg:gap-9">
-          <p className="w-24">Role :</p>
+          <p className="w-24">
+            <span className="text-red-500">*</span> Role :
+          </p>
           <select
             defaultValue={"DEFAULT"}
             id="input-role"

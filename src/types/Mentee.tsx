@@ -1,10 +1,17 @@
 export interface MenteeType {
-  id?: number;
+  id?: any;
   name?: string;
+  phone?: string;
+  email?: string;
+  team?: string;
+  gender?: string;
+  role?: string;
+  address?: string;
+  date_birth?: string;
+
   class?: string;
   status?: string;
   category?: string;
-  gender?: string;
 }
 
 export interface ClassType {

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 import Layout from "../components/Layout";
 import Navbar from "../components/Navbar";
@@ -12,6 +13,7 @@ import { TfiTrash } from "react-icons/tfi";
 import { GoBook } from "react-icons/go";
 
 const MenteeList = () => {
+  const navigate = useNavigate();
   const [mentee, setMentee] = useState<MenteeType[]>([]);
   const [search, setSearch] = useState<string>("");
   const [filterClass, setFilterClass] = useState("");
@@ -153,7 +155,7 @@ const MenteeList = () => {
                       Log
                     </p>
                   </td>
-                  <td>
+                  <td onClick={() => navigate(`/edituser/${mentee.id}`)}>
                     <p className="flex gap-2 font-normal">
                       <BiEdit size={25} />
                       Edit
