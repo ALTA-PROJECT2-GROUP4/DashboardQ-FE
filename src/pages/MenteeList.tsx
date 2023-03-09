@@ -175,7 +175,7 @@ const MenteeList = () => {
                       Log
                     </p>
                   </td>
-                  <td onClick={() => navigate(`/edituser/${mentee.id}`)}>
+                  <td onClick={() => navigate(`/editmente/${mentee.id}`)}>
                     <p className="flex gap-2 font-normal">
                       <BiEdit size={25} />
                       Edit
