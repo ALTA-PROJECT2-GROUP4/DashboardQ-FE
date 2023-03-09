@@ -40,22 +40,18 @@ const AddClass = () => {
     setLoading(true);
     e.preventDefault();
     const body = {
-      class_name: className,
-      start_date: startDate,
-      end_date: endDate,
+      name: className,
+      start_class: startDate,
+      end_class: endDate,
       mentor_name: mentorName,
     };
 
     axios
-      .post(
-        `https://virtserver.swaggerhub.com/ALFIANADSAPUTRA_1/DashboardQ/1.0.0/class`,
-        body,
-        {
-          headers: {
-            Authorization: `Bearer ${checkToken}`,
-          },
-        }
-      )
+      .post(`https://projectfebe.online/class`, body, {
+        headers: {
+          Authorization: `Bearer ${checkToken}`,
+        },
+      })
       .then((res) => {
         const { message } = res.data;
         MySwal.fire({

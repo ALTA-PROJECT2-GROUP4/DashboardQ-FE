@@ -28,14 +28,11 @@ const Class = () => {
   function fetchData() {
     setLoading(true);
     axios
-      .get(
-        "https://virtserver.swaggerhub.com/ALFIANADSAPUTRA_1/DashboardQ/1.0.0/class",
-        {
-          headers: {
-            Authorization: `Bearer ${checkToken}`,
-          },
-        }
-      )
+      .get("https://projectfebe.online/class", {
+        headers: {
+          Authorization: `Bearer ${checkToken}`,
+        },
+      })
       .then((res) => {
         const { data } = res.data;
         setDatas(data);
