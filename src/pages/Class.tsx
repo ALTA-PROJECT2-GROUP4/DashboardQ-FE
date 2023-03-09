@@ -136,7 +136,7 @@ const Class = () => {
                   </td>
                   <td>
                     <p
-                      className="flex gap-2 font-normal text-red-500"
+                      className="flex gap-2 font-normal text-red-500 hover:cursor-pointer hover:text-red-300"
                       onClick={() => handleDelete(data.id)}
                     >
                       <TfiTrash color="red" size={25} />
