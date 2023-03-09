@@ -9,7 +9,6 @@ import Navbar from "../components/Navbar";
 
 import { MenteeType } from "../types/Mentee";
 import { useCookies } from "react-cookie";
-import { useNavigate } from "react-router-dom";
 
 import { BiEdit } from "react-icons/bi";
 import { TfiTrash } from "react-icons/tfi";
@@ -53,7 +52,7 @@ const MenteeList = () => {
       )
       .then((response) => {
         setMentee(response.data.data);
-        console.log("datas :", response.data.data)
+        console.log("datas :", response.data.data);
       })
       .catch((error) => {
         alert(error.response.toString());
@@ -101,11 +100,14 @@ const MenteeList = () => {
               className="input-bordered input rounded-xl text-black"
             />
           </div>
-          <button 
-          onClick={() => 
-          checkRole === "admin" && "user" ? navigate("/addmente") : handleUser()
-          }
-          className="btn rounded-2xl bg-[#1F4068]">
+          <button
+            onClick={() =>
+              checkRole === "admin" && "user"
+                ? navigate("/addmente")
+                : handleUser()
+            }
+            className="btn rounded-2xl bg-[#1F4068]"
+          >
             Add New Mentee
           </button>
         </div>
