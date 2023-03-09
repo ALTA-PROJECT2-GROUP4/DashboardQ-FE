@@ -14,3 +14,16 @@ export interface MenteTypes {
   category: string;
   gender: string;
 }
+
+export interface FeedbackTypes {
+  user_id: number;
+  name: string;
+  created_at: string;
+  status: string;
+  notes: note;
+}
+
+type note = {
+  notes_id: number;
+  notes: string;
+};

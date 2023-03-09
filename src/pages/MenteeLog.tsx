@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useCookies } from "react-cookie";
 import axios from "axios";
+
+import { FeedbackTypes } from "../types/UserType";
 
 import CustomButton from "../components/CustomButton";
 import Layout from "../components/Layout";
@@ -10,6 +13,49 @@ import "../styles/index.css";
 
 const MenteeLog = () => {
   const navigate = useNavigate();
+  const { mente_id } = useParams();
+  const [cookie, setCookie] = useCookies(["token"]);
+  const checkToken = cookie.token;
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const [name, setName] = useState<string>("");
+  const [user, setUser] = useState<FeedbackTypes[]>([]);
+  const [category, setCategory] = useState<string>("");
+  const [phone, setPhone] = useState<string>("");
+  const [telegram, setTelegram] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  // const [user, setUser] = useState<>([])
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  function fetchData() {
+    setLoading(true);
+    axios
+      .get(
+        `https://virtserver.swaggerhub.com/ALFIANADSAPUTRA_1/DashboardQ/1.0.0/feedback/${mente_id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${checkToken}`,
+          },
+        }
+      )
+      .then((res) => {
+        const { name, category, phone, telegram, email, user } =
+          res.data.data.mentee;
+        setName(name);
+        setCategory(category);
+        setPhone(phone);
+        setTelegram(telegram);
+        setEmail(email);
+        setUser(user);
+      })
+      .catch((err) => {
+        alert(err.response.toString());
+      })
+      .finally(() => setLoading(false));
+  }
 
   return (
     <Layout>
@@ -19,11 +65,9 @@ const MenteeLog = () => {
           Mentee Log
         </p>
         <div className="-mt-3 flex flex-col p-4 text-color1">
-          <p className="laila text-3xl font-semibold ">Jhon Doe</p>
+          <p className="laila text-3xl font-semibold ">{name}</p>
           <p className="laila text-xl font-semibold opacity-60">FE Batch 12</p>
-          <p className="laila text-xl font-semibold opacity-60">
-            Non-Informatics
-          </p>
+          <p className="laila text-xl font-semibold opacity-60">{category}</p>
         </div>
         <div className="-mt-28 flex justify-end">
           <div className="overflow-x-auto">
@@ -32,21 +76,21 @@ const MenteeLog = () => {
                 <tr>
                   <th className="laila w-1/12 bg-transparent">Phone</th>
                   <td className="laila bg-transparent font-semibold">
-                    : 081122334455
+                    : {phone}
                   </td>
                 </tr>
 
                 <tr>
                   <th className="laila lead w-1/12 bg-transparent">Telegram</th>
                   <td className="laila bg-transparent font-semibold">
-                    : @jhondoe
+                    : {telegram}
                   </td>
                 </tr>
 
                 <tr>
                   <th className="laila w-1/12 bg-transparent">Email</th>
                   <td className="laila bg-transparent font-semibold">
-                    : jhonDoe@gmail.com
+                    : {email}
                   </td>
                 </tr>
               </tbody>
@@ -64,107 +108,24 @@ const MenteeLog = () => {
 
         <div className="mt-10 flex flex-col ">
           <div className="card w-full gap-3 bg-white">
-            <div className="card-body grid grid-cols-3">
-              <div className="font-semibold">
-                <p>Interview</p>
-                <p>Jhon Doe</p>
-                <p className="opacity-90">13-Jan-2023</p>
-                <div className="mt-11 mb-6">
-                  <p>Status</p>
-                  <p>interview agreed</p>
+            {user.map((data, index) => (
+              <>
+                <div key={data.user_id} className="card-body grid grid-cols-3">
+                  <div className="font-semibold">
+                    <p>Interview</p>
+                    <p>{data.name}</p>
+                    <p className="opacity-90">{data.created_at}</p>
+                    <div className="mt-11 mb-6">
+                      <p>Status</p>
+                      <p>{data.status}</p>
+                    </div>
+                  </div>
+                  <div className="col-span-2 font-semibold">
+                    <p>{data.notes.notes}</p>
+                  </div>
                 </div>
-              </div>
-              <div className="col-span-2 font-semibold">
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Voluptate neque dolorum excepturi, ab possimus necessitatibus
-                  amet voluptas blanditiis illo quasi, eos optio minus sapiente
-                  odit, nesciunt id odio alias! Deleniti. Lorem ipsum dolor sit
-                  amet consectetur adipisicing elit. Culpa totam omnis
-                  molestiae, atque reprehenderit rem mollitia adipisci? Repellat
-                  sapiente impedit aperiam omnis culpa voluptas totam autem
-                  laudantium eveniet atque. Eius?Lorem ipsum dolor sit amet
-                  consectetur, adipisicing elit. Voluptatum vel praesentium,
-                  perferendis similique natus, a autem animi ut eaque vero iusto
-                  est corporis repellat sit hic necessitatibus labore error
-                  accusamus. Lorem ipsum dolor sit, amet consectetur adipisicing
-                  elit. Modi aspernatur nihil consequuntur provident magni, sed
-                  ipsum aliquam ullam exercitationem! Reprehenderit quae
-                  praesentium corporis facere minima voluptatibus voluptatum,
-                  vero porro placeat.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="mt-10 flex flex-col ">
-          <div className="card w-full gap-3 bg-white">
-            <div className="card-body grid grid-cols-3">
-              <div className="font-semibold">
-                <p>Accepted</p>
-                <p>Jhon Doe</p>
-                <p className="opacity-90">20-Jan-2023</p>
-                <div className="mt-11 mb-6">
-                  <p>Status</p>
-                  <p>Join Class</p>
-                </div>
-              </div>
-              <div className="col-span-2 font-semibold">
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Voluptate neque dolorum excepturi, ab possimus necessitatibus
-                  amet voluptas blanditiis illo quasi, eos optio minus sapiente
-                  odit, nesciunt id odio alias! Deleniti. Lorem ipsum dolor sit
-                  amet consectetur adipisicing elit. Culpa totam omnis
-                  molestiae, atque reprehenderit rem mollitia adipisci? Repellat
-                  sapiente impedit aperiam omnis culpa voluptas totam autem
-                  laudantium eveniet atque. Eius?Lorem ipsum dolor sit amet
-                  consectetur, adipisicing elit. Voluptatum vel praesentium,
-                  perferendis similique natus, a autem animi ut eaque vero iusto
-                  est corporis repellat sit hic necessitatibus labore error
-                  accusamus. Lorem ipsum dolor sit, amet consectetur adipisicing
-                  elit. Modi aspernatur nihil consequuntur provident magni, sed
-                  ipsum aliquam ullam exercitationem! Reprehenderit quae
-                  praesentium corporis facere minima voluptatibus voluptatum,
-                  vero porro placeat.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="mt-10 flex flex-col ">
-          <div className="card w-full gap-3 bg-white">
-            <div className="card-body grid grid-cols-3">
-              <div className="font-semibold">
-                <p>Section Ends Unit</p>
-                <p>Jhon Doe</p>
-                <p className="opacity-90">13-Feb-2023</p>
-                <div className="mt-11 mb-6">
-                  <p>Status</p>
-                  <p>Continue to section 2</p>
-                </div>
-              </div>
-              <div className="col-span-2 font-semibold">
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Voluptate neque dolorum excepturi, ab possimus necessitatibus
-                  amet voluptas blanditiis illo quasi, eos optio minus sapiente
-                  odit, nesciunt id odio alias! Deleniti. Lorem ipsum dolor sit
-                  amet consectetur adipisicing elit. Culpa totam omnis
-                  molestiae, atque reprehenderit rem mollitia adipisci? Repellat
-                  sapiente impedit aperiam omnis culpa voluptas totam autem
-                  laudantium eveniet atque. Eius?Lorem ipsum dolor sit amet
-                  consectetur, adipisicing elit. Voluptatum vel praesentium,
-                  perferendis similique natus, a autem animi ut eaque vero iusto
-                  est corporis repellat sit hic necessitatibus labore error
-                  accusamus. Lorem ipsum dolor sit, amet consectetur adipisicing
-                  elit. Modi aspernatur nihil consequuntur provident magni, sed
-                  ipsum aliquam ullam exercitationem! Reprehenderit quae
-                  praesentium corporis facere minima voluptatibus voluptatum,
-                  vero porro placeat.
-                </p>
-              </div>
-            </div>
+              </>
+            ))}
           </div>
         </div>
       </div>
