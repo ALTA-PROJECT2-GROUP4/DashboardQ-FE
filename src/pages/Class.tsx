@@ -33,7 +33,7 @@ const Class = () => {
     setLoading(true);
     axios
       .get(
-        "https://virtserver.swaggerhub.com/ALFIANADSAPUTRA_1/DashboardQ/1.0.0/class",
+        "https://projectfebe.online/class",
         {
           headers: {
             Authorization: `Bearer ${checkToken}`,
@@ -61,7 +61,7 @@ const Class = () => {
         setLoading(true);
         axios
           .delete(
-            `https://virtserver.swaggerhub.com/ALFIANADSAPUTRA_1/DashboardQ/1.0.0/class/${id}`,
+            `https://projectfebe.online/class/${id}`,
             {
               headers: {
                 Authorization: `Bearer ${checkToken}`,
