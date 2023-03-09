@@ -10,6 +10,7 @@ import CustomInput from "../components/CustomInput";
 import Layout from "../components/Layout";
 import Navbar from "../components/Navbar";
 import { useCookies } from "react-cookie";
+import { string } from "prop-types";
 
 const AddUser = () => {
   const navigate = useNavigate();
@@ -30,13 +31,27 @@ const AddUser = () => {
   const [address, setAddress] = useState<string>("");
   const [bod, setBod] = useState<string>("");
 
+  const [clear, setClear] = useState<string>("");
+
+  // const [formData, setFormData] = useState({
+  //   name: "",
+  //   phone: "",
+  //   password: "",
+  //   email: "",
+  //   team: "",
+  //   gender: "",
+  //   role: "",
+  //   address: "",
+  //   date_birth: "",
+  // });
+
   useEffect(() => {
-    if (name && password && email) {
+    if (name && password && email && role) {
       setDisale(false);
     } else {
       setDisale(true);
     }
-  }, [name, password, email]);
+  }, [name, password, email, role]);
 
   const handleAdd = (e: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
@@ -51,7 +66,7 @@ const AddUser = () => {
       gender,
       role,
       address,
-      bod,
+      date_birth: bod,
     };
 
     axios
@@ -62,6 +77,7 @@ const AddUser = () => {
       })
       .then((res) => {
         const { message } = res.data;
+        setClear(message);
 
         MySwal.fire({
           icon: "success",
@@ -69,6 +85,17 @@ const AddUser = () => {
           text: "berhasil menambahkan user baru",
           showCancelButton: false,
         });
+
+        Array.from(document.querySelectorAll("input")).forEach(
+          (input) => (input.value = "")
+        );
+
+        Array.from(document.querySelectorAll("select")).forEach(
+          (input) => (input.value = "DEFAULT")
+        );
+
+        let role: any = document.getElementById("input-genderMen");
+        role = { "": "" };
       })
       .catch((err) => {
         const { data } = err.response;
@@ -81,6 +108,15 @@ const AddUser = () => {
       .finally(() => setLoading(false));
   };
 
+  // useEffect(() => {
+  //   if (clear === "success create user account") {
+  //     console.log("clear oke");
+  //     Array.from(document.querySelectorAll("input")).forEach(
+  //       (input) => (input.value = "")
+  //     );
+  //   }
+  // }, []);
+
   return (
     <Layout>
       <Navbar />
@@ -90,11 +126,14 @@ const AddUser = () => {
         </p>
 
         <div className="flex  items-center gap-4 text-[16px] font-medium text-color1">
-          <p className="w-24">Nama :</p>
+          <p className="w-24">
+            <span className="text-red-500">*</span> Nama :
+          </p>
           <CustomInput
             id="input-nama"
             type="text"
             placeholder="Contoh : Andre Taulani"
+            defaultValue={name}
             onChange={(e) => setName(e.target.value)}
           />
         </div>
@@ -110,7 +149,9 @@ const AddUser = () => {
         </div>
 
         <div className="mt-5 flex items-center text-[16px] font-medium text-color1 md:w-7/12 md:gap-0 lg:w-4/12 lg:gap-4">
-          <p className="w-28">Password :</p>
+          <p className="w-28">
+            <span className="text-red-500">*</span> Password :
+          </p>
           <CustomInput
             id="input-password"
             type="text"
@@ -120,7 +161,9 @@ const AddUser = () => {
         </div>
 
         <div className="mt-5 flex items-center gap-4 text-[16px] font-medium text-color1">
-          <p className="w-24">E - mail :</p>
+          <p className="w-24">
+            <span className="text-red-500">*</span> E - mail :
+          </p>
           <CustomInput
             id="input-email"
             type="text"
@@ -141,7 +184,9 @@ const AddUser = () => {
         </div>
 
         <div className="mt-5 flex items-center text-[16px] font-medium text-color1 md:w-7/12 md:gap-4 lg:w-4/12 lg:gap-9">
-          <p className="w-24">Role :</p>
+          <p className="w-24">
+            <span className="text-red-500">*</span> Role :
+          </p>
           <select
             defaultValue={"DEFAULT"}
             id="input-role"
@@ -223,6 +268,7 @@ const AddUser = () => {
             id="btn-cancel"
             label="Menambah User"
             loading={loading || disable}
+            // onClick={() => handleClear()}
           />
         </div>
       </form>

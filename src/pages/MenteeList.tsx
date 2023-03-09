@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "../utils/Swal";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
 
 import Layout from "../components/Layout";
 import Navbar from "../components/Navbar";
@@ -41,6 +41,7 @@ const MenteeList = () => {
   }, []);
 
   function listMentee() {
+    setLoading(true);
     axios
       .get(
         `https://virtserver.swaggerhub.com/ALFIANADSAPUTRA_1/DashboardQ/1.0.0/mentee`,
@@ -55,27 +56,34 @@ const MenteeList = () => {
         console.log("datas :", response.data.data)
       })
       .catch((error) => {
-        console.log(error);
+        alert(error.response.toString());
       });
   }
 
-  const handleFilterClassChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleFilterClassChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     setFilterClass(event.target.value);
   };
 
-  const handleFilterCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleFilterCategoryChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     setFilterCategory(event.target.value);
   };
 
-  const handleFilterStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleFilterStatusChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     setFilterStatus(event.target.value);
   };
 
-  const filterMentee = mentee.filter((item) =>
-    item.name?.toLowerCase().includes(search.toLowerCase()) &&
-    (filterClass === "" || item.class === filterClass) &&
-    (filterCategory === "" || item.category === filterCategory) &&
-    (filterStatus === "" || item.status === filterStatus)
+  const filterMentee = mentee.filter(
+    (item) =>
+      item.name?.toLowerCase().includes(search.toLowerCase()) &&
+      (filterClass === "" || item.class === filterClass) &&
+      (filterCategory === "" || item.category === filterCategory) &&
+      (filterStatus === "" || item.status === filterStatus)
   );
 
   return (
@@ -102,35 +110,33 @@ const MenteeList = () => {
           </button>
         </div>
         <div className="mt-10 flex flex-wrap justify-end space-x-3">
-
-          <select className="select w-1/5 max-w-xs rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
-           value={filterClass} 
-           onChange={handleFilterClassChange}>
-            <option value="">
-
-              Class
-            </option>
+          <select
+            className="select w-1/5 max-w-xs rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+            value={filterClass}
+            onChange={handleFilterClassChange}
+          >
+            <option value="">Class</option>
             <option value="FE 8">FE12</option>
             <option value="BE 10">BE10</option>
             <option value="QE Batch 10">QE8</option>
           </select>
-          <select className="select w-1/5 max-w-xs rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
-          value={filterStatus} 
-          onChange={handleFilterStatusChange}>
-            <option value="">
-              Status
-            </option>
+          <select
+            className="select w-1/5 max-w-xs rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+            value={filterStatus}
+            onChange={handleFilterStatusChange}
+          >
+            <option value="">Status</option>
             <option value="Placement">Placement</option>
             <option value="Gradueted">Graduet</option>
             <option value="Active">Active</option>
             <option value="Eliminated">Eliminated</option>
           </select>
-          <select className="select w-1/5 max-w-xs rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
-          value={filterCategory} 
-          onChange={handleFilterCategoryChange}>
-            <option value="">
-              Category
-            </option>
+          <select
+            className="select w-1/5 max-w-xs rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+            value={filterCategory}
+            onChange={handleFilterCategoryChange}
+          >
+            <option value="">Category</option>
             <option value="IT">Infomatics</option>
             <option value="Non-IT">Non-Informatics</option>
           </select>
@@ -139,7 +145,6 @@ const MenteeList = () => {
 
         <div className="mt-24 overflow-x-auto">
           <table className="table w-full">
-            {/* head */}
             <thead>
               <tr>
                 <th className="w-1/12 bg-[#232932] text-white">No</th>
@@ -168,7 +173,7 @@ const MenteeList = () => {
                       Log
                     </p>
                   </td>
-                  <td>
+                  <td onClick={() => navigate(`/edituser/${mentee.id}`)}>
                     <p className="flex gap-2 font-normal">
                       <BiEdit size={25} />
                       Edit

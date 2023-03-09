@@ -17,8 +17,9 @@ import { TfiTrash } from "react-icons/tfi";
 const UserList = () => {
   const navigate = useNavigate();
   const MySwal = withReactContent(Swal);
-  const [cookie, setCookie] = useCookies(["token", "role"]);
+  const [cookie, setCookie] = useCookies(["id", "token", "role"]);
   const checkRole = cookie.role;
+  const checkId = cookie.id;
 
   const [users, setUsers] = useState<UserType[]>([]);
   const [search, setSearch] = useState<string>("");
@@ -66,6 +67,14 @@ const UserList = () => {
       .catch((error) => console.log(error));
   };
 
+  const handleNavigate = (id: any) => {
+    if (checkRole === "admin") {
+      navigate(`/edituser/${id}`);
+    } else {
+      navigate(`/edituser/${checkId}`);
+    }
+  };
+
   return (
     <Layout>
       <Navbar />
@@ -105,15 +114,18 @@ const UserList = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredUser.map((user) => (
-                <tr key={user.id} className="font-semibold">
-                  <th>{user.id}</th>
+              {filteredUser.map((user, index) => (
+                <tr key={user.id} className="font-normal">
+                  <th className="font-normal">{index + 1}</th>
                   <td>{user.name}</td>
                   <td>{user.email}</td>
                   <td>{user.team}</td>
                   <td>{user.role}</td>
-                  <td>
-                    <p className="flex gap-2 font-normal">
+                  <td className="hover:cursor-pointer">
+                    <p
+                      onClick={() => handleNavigate(user.id)}
+                      className="flex gap-2 font-normal"
+                    >
                       <BiEdit size={25} />
                       Edit
                     </p>
