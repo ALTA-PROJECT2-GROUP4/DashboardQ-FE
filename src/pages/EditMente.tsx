@@ -1,9 +1,69 @@
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import axios from "axios";
+
+import withReactContent from "sweetalert2-react-content";
+import { MenteeType } from "../types/Mentee";
+import Swal from "../utils/Swal";
+
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import Layout from "../components/Layout";
 import Navbar from "../components/Navbar";
 
 const EditMente = () => {
+  const navigate = useNavigate();
+  const MySwal = withReactContent(Swal);
+
+  const [cookie, setCookie] = useCookies(["token", "role"]);
+  const checkToken = cookie.token;
+  const checkRole = cookie.role;
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const [disable, setDisable] = useState<boolean>(true);
+
+  const [submit, setSubmit] = useState<MenteeType>({});
+  const [name, setName] = useState<string>("");
+  const [phone, setPhone] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [team, setTeam] = useState<string>("");
+  const [gender, setGender] = useState<string>("");
+  const [role, setRole] = useState<string>("");
+  const [address, setAddress] = useState<string>("");
+  const [bod, setBod] = useState<string>("");
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  function fetchData() {
+    setLoading(true);
+    axios
+      .get("https://projectfebe.online/profile/4", {
+        headers: {
+          Authorization: `Bearer ${checkToken}`,
+        },
+      })
+      .then((res) => {
+        const { name, date_birth, role, email, gender, team, phone, address } =
+          res.data.data;
+
+        setName(name);
+        setBod(date_birth);
+        setRole(role);
+        setEmail(email);
+        setGender(gender);
+        setTeam(team);
+        setPhone(phone);
+        setAddress(address);
+      })
+      .catch((err) => {
+        alert(err.response.toString());
+      })
+      .finally(() => setLoading(false));
+  }
+
   return (
     <Layout>
       <Navbar />
@@ -15,6 +75,7 @@ const EditMente = () => {
           <CustomInput
             id="input-nama"
             type="text"
+            defaultValue={name}
             placeholder="Contoh : Andre Taulani"
           />
         </div>
@@ -25,6 +86,7 @@ const EditMente = () => {
             id="input-nama"
             type="text"
             placeholder="Contoh : 089678876654"
+            defaultValue={phone}
           />
         </div>
 
@@ -34,6 +96,7 @@ const EditMente = () => {
             id="input-nama"
             type="text"
             placeholder="Contoh : 0888988876676"
+            defaultValue={phone}
           />
         </div>
 
@@ -43,6 +106,7 @@ const EditMente = () => {
             id="input-nama"
             type="text"
             placeholder="Contoh : andretaulani11@gmail.com"
+            defaultValue={email}
           />
         </div>
 
@@ -52,6 +116,7 @@ const EditMente = () => {
             id="date"
             type="date"
             placeholder={"test"}
+            defaultValue={bod}
             className="input-border input h-12 w-7/12 max-w-full rounded-lg border-2 border-zinc-400 bg-[#EFFFFD] px-4 py-0 font-normal text-color1 placeholder-slate-400 md:text-[14px] lg:text-[15px]"
           />
         </div>
@@ -95,7 +160,6 @@ const EditMente = () => {
               type="radio"
               name="radio-2"
               className="radio-primary radio"
-              checked
             />
             <p className="text-[15px]">Men</p>
           </div>
@@ -178,7 +242,6 @@ const EditMente = () => {
               type="radio"
               name="radio-1"
               className="radio-primary radio"
-              checked
             />
             <p className="text-[15px]">Informatic</p>
           </div>

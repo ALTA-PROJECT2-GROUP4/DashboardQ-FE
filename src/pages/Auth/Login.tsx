@@ -16,7 +16,13 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const MySwal = withReactContent(Swal);
-  const [cookie, setCookie] = useCookies(["token", "role", "email", "name"]);
+  const [cookie, setCookie] = useCookies([
+    "id",
+    "token",
+    "role",
+    "email",
+    "name",
+  ]);
 
   const [loading, setLoading] = useState<boolean>(false);
   const [disable, setDisable] = useState<boolean>(true);
@@ -44,12 +50,13 @@ const Login = () => {
       .post("https://projectfebe.online/login", body)
       .then((res) => {
         const { message, token } = res.data;
-        const { name, email, role } = res.data.data;
+        const { id, name, email, role } = res.data.data;
 
         setCookie("token", token, { path: "/" });
         setCookie("role", role, { path: "/" });
         setCookie("email", email, { path: "/" });
         setCookie("name", name, { path: "/" });
+        setCookie("id", id, { path: "/" });
 
         dispatch(handleAuth(true));
         MySwal.fire({

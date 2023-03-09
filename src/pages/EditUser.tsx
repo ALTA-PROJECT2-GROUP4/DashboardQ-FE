@@ -1,17 +1,126 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import axios from "axios";
+
+import withReactContent from "sweetalert2-react-content";
+import { MenteeType } from "../types/Mentee";
+import Swal from "../utils/Swal";
+
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import Layout from "../components/Layout";
 import Navbar from "../components/Navbar";
 
 const EditUser = () => {
+  const navigate = useNavigate();
+  const MySwal = withReactContent(Swal);
+  const { user_id } = useParams();
+
+  const [cookie, setCookie] = useCookies(["token", "role"]);
+  const checkToken = cookie.token;
+  const checkRole = cookie.role;
+
   const [loading, setLoading] = useState<boolean>(false);
-  const [disable, setDisale] = useState<boolean>(false);
+  const [disable, setDisable] = useState<boolean>(false);
+
+  const [submit, setSubmit] = useState<MenteeType>({});
+  const [name, setName] = useState<string>("");
+  const [phone, setPhone] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [team, setTeam] = useState<string>("");
+  const [gender, setGender] = useState<string>("");
+  const [role, setRole] = useState<string>("");
+  const [address, setAddress] = useState<string>("");
+  const [bod, setBod] = useState<string>("");
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  function fetchData() {
+    setLoading(true);
+    axios
+      .get(`https://projectfebe.online/profile/${user_id}`, {
+        headers: {
+          Authorization: `Bearer ${checkToken}`,
+        },
+      })
+      .then((res) => {
+        const { name, date_birth, role, email, gender, team, phone, address } =
+          res.data.data;
+
+        setName(name);
+        setBod(date_birth);
+        setRole(role);
+        setEmail(email);
+        setGender(gender);
+        setTeam(team);
+        setPhone(phone);
+        setAddress(address);
+      })
+      .catch((err) => {
+        alert(err.response.toString());
+      })
+      .finally(() => setLoading(false));
+  }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    setLoading(true);
+    e.preventDefault();
+    const formData = new FormData();
+    let key: keyof typeof submit;
+    for (key in submit) {
+      formData.append(key, submit[key]);
+    }
+
+    axios
+      .put(
+        checkRole === "admin"
+          ? `https://projectfebe.online/users/${user_id}`
+          : `https://projectfebe.online/profile`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${checkToken}`,
+            "Content-Type": "multipart/json",
+          },
+        }
+      )
+      .then((res) => {
+        const { message } = res.data;
+
+        MySwal.fire({
+          icon: "success",
+          title: message,
+          text: "Data Berhasil Diupdate",
+          showCancelButton: false,
+        });
+        setSubmit({});
+      })
+      .catch((err) => {
+        const { data } = err.response;
+        MySwal.fire({
+          icon: "error",
+          title: data.message,
+          text: "Data Gagal Diupdate",
+          showCancelButton: false,
+        });
+      })
+      .finally(() => fetchData())
+      .finally(() => setLoading(false));
+  };
+
+  const handleChange = (value: string, key: keyof typeof submit) => {
+    let temp = { ...submit };
+    temp[key] = value;
+    setSubmit(temp);
+  };
 
   return (
     <Layout>
       <Navbar />
-      <div className="pl-20">
+      <form onSubmit={(e) => handleSubmit(e)} className="pl-20">
         <p className="my-14 text-[32px] font-medium text-color1">Edit User</p>
 
         <div className="flex  items-center gap-4 text-[16px] font-medium text-color1">
@@ -20,6 +129,8 @@ const EditUser = () => {
             id="input-nama"
             type="text"
             placeholder="Contoh : Andre Taulani"
+            defaultValue={name}
+            onChange={(e) => handleChange(e.target.value, "name")}
           />
         </div>
 
@@ -29,6 +140,8 @@ const EditUser = () => {
             id="input-nama"
             type="text"
             placeholder="Contoh : 089678876654"
+            defaultValue={phone}
+            onChange={(e) => handleChange(e.target.value, "phone")}
           />
         </div>
 
@@ -39,6 +152,7 @@ const EditUser = () => {
             type="text"
             placeholder="**************"
             defaultValue={"**************"}
+            disabled
           />
         </div>
 
@@ -48,6 +162,8 @@ const EditUser = () => {
             id="input-nama"
             type="text"
             placeholder="Contoh : andretaulani11@gmail.com"
+            defaultValue={email}
+            onChange={(e) => handleChange(e.target.value, "email")}
           />
         </div>
 
@@ -57,6 +173,8 @@ const EditUser = () => {
             id="date"
             type="date"
             placeholder={"test"}
+            defaultValue={bod}
+            onChange={(e) => handleChange(e.target.value, "date_birth")}
             className="input-border input h-12 w-7/12 max-w-full rounded-lg border-2 border-zinc-400 bg-[#EFFFFD] px-4 py-0 font-normal text-color1 placeholder-slate-400 md:text-[14px] lg:text-[15px]"
           />
         </div>
@@ -68,12 +186,13 @@ const EditUser = () => {
             id="input-role"
             name="option"
             className="border-navy select-bordered select w-7/12 border-2 border-zinc-400  bg-[#EFFFFD] font-normal lg:w-7/12"
+            disabled
           >
             <option value="DEFAULT" disabled>
-              Pilih Salah Satu
+              {role === "" ? "Pilih salah satu" : role}
             </option>
-            <option value="Admin">Admin</option>
-            <option value="User">User</option>
+            <option value="admin">Admin</option>
+            <option value="user">User</option>
           </select>
         </div>
 
@@ -81,12 +200,13 @@ const EditUser = () => {
           <p className="w-24">Team :</p>
           <select
             defaultValue={"DEFAULT"}
+            onChange={(e) => handleChange(e.target.value, "team")}
             id="input-role"
             name="option"
             className="border-navy select-bordered select w-7/12 border-2 border-zinc-400  bg-[#EFFFFD] font-normal lg:w-7/12"
           >
             <option value="DEFAULT" disabled>
-              Pilih Salah Satu
+              {team === "" ? "Pilih salah satu" : team}
             </option>
             <option value="Academy">Academy</option>
             <option value="People Skill">People Skill</option>
@@ -102,7 +222,8 @@ const EditUser = () => {
               type="radio"
               name="radio-2"
               className="radio-primary radio"
-              checked
+              value="men"
+              onChange={(e) => handleChange(e.target.value, "gender")}
             />
             <p className="text-[15px]">Men</p>
           </div>
@@ -112,6 +233,8 @@ const EditUser = () => {
               type="radio"
               name="radio-2"
               className="radio-primary radio"
+              value="women"
+              onChange={(e) => handleChange(e.target.value, "gender")}
             />
             <p className="text-[15px]">Women</p>
           </div>
@@ -123,14 +246,24 @@ const EditUser = () => {
             id="input-nama"
             type="text"
             placeholder="Contoh : Andre Taulani"
+            defaultValue={address}
+            onChange={(e) => handleChange(e.target.value, "address")}
           />
         </div>
 
         <div className="mt-14 mb-20 flex gap-5">
-          <CustomButton id="btn-cancel" label="Kembali" />
-          <CustomButton id="btn-cancel" label="Edit User" />
+          <CustomButton
+            id="btn-cancel"
+            label="Kembali"
+            onClick={() => navigate("/user")}
+          />
+          <CustomButton
+            id="btn-cancel"
+            label="Edit User"
+            loading={loading || disable}
+          />
         </div>
-      </div>
+      </form>
     </Layout>
   );
 };
