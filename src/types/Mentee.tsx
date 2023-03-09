@@ -14,6 +14,14 @@ export interface MenteeType {
   category?: string;
 }
 
+export interface ClasType {
+  id?: any;
+  name?: string;
+  start_class?: string;
+  end_class?: string;
+  mentor?: string;
+}
+
 export interface ClassType {
   id: number;
   name: string;

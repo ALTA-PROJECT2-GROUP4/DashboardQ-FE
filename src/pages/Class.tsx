@@ -76,7 +76,7 @@ const Class = () => {
                 <th className="w-2/12 bg-[#232932] text-white">Start Class</th>
                 <th className="w-2/12 bg-[#232932] text-white">End Class</th>
                 <th className="w-1/12 bg-[#232932] text-white"></th>
-                <th className="w-1/12 bg-[#232932] text-white"></th>
+                <th className="w-1/12 bg-[rgb(35,41,50)] text-white"></th>
               </tr>
             </thead>
             <tbody>
@@ -87,8 +87,8 @@ const Class = () => {
                   <td>{data.mentor}</td>
                   <td>{moment(data.start_class).format("DD-MMM-YY")}</td>
                   <td>{moment(data.end_class).format("DD-MMM-YY")}</td>
-                  <td>
-                    <p className="flex gap-2 font-normal">
+                  <td onClick={() => navigate(`/editclass/${data.id}`)}>
+                    <p className="flex gap-2 font-normal hover:cursor-pointer hover:text-[rgba(35,41,50,0.6)]">
                       <BiEdit size={25} />
                       Edit
                     </p>
