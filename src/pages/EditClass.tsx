@@ -5,6 +5,7 @@ import axios from "axios";
 
 import withReactContent from "sweetalert2-react-content";
 import { ClassType, ClasType } from "../types/Mentee";
+import { UserType } from "../types/UserType";
 import Swal from "../utils/Swal";
 
 import CustomButton from "../components/CustomButton";
@@ -23,10 +24,33 @@ const EditClass = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const [change, setChange] = useState<ClasType>({});
+  const [getUset, setGetUser] = useState<UserType[]>([]);
   const [className, setClassName] = useState<string>("");
   const [userName, setUserName] = useState<string>("");
   const [startClass, setStartClass] = useState<string>("");
   const [endClass, setEndClass] = useState<string>("");
+
+  useEffect(() => {
+    dataUser();
+  }, []);
+
+  function dataUser() {
+    setLoading(true);
+    axios
+      .get(`https://projectfebe.online/users`, {
+        headers: {
+          Authorization: `Bearer ${checkToken}`,
+        },
+      })
+      .then((res) => {
+        const { data } = res.data;
+        setGetUser(data);
+      })
+      .catch((err) => {
+        alert(err.response.toString());
+      })
+      .finally(() => setLoading(false));
+  }
 
   useEffect(() => {
     fetchData();
@@ -78,6 +102,13 @@ const EditClass = () => {
       .then((res) => {
         const { message } = res.data;
         setChange(message);
+        MySwal.fire({
+          icon: "success",
+          title: message,
+          text: "Berhasil melakukan update",
+          showCancelButton: false,
+        });
+        navigate("/class");
       })
       .catch((err) => {
         // const { data } = err.response;
@@ -128,8 +159,11 @@ const EditClass = () => {
             <option value="DEFAULT" disabled>
               {userName === "" ? "Pilih salah satu" : userName}
             </option>
-            <option value="Mas Bagas">Mas Bagas</option>
-            <option value="Mas Fakhry">Mas Fakhry</option>
+            {getUset.map((item) => (
+              <option key={item.id} value={item.name}>
+                {item.name}
+              </option>
+            ))}
           </select>
         </div>
 
