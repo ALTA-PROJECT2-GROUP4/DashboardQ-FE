@@ -18,6 +18,7 @@ const UserList = () => {
   const navigate = useNavigate();
   const MySwal = withReactContent(Swal);
   const [cookie, setCookie] = useCookies(["id", "token", "role"]);
+  const checkToken = cookie.token;
   const checkRole = cookie.role;
   const checkId = cookie.id;
 
@@ -42,7 +43,7 @@ const UserList = () => {
     axios
       .get("https://projectfebe.online/users", {
         headers: {
-          Authorization: `Bearer ${cookie.token}`,
+          Authorization: `Bearer ${checkToken}`,
         },
       })
       .then((response) => {
@@ -65,6 +66,38 @@ const UserList = () => {
         setUsers(updatedUsers);
       })
       .catch((error) => console.log(error));
+  };
+
+  const handleDelete = async (id: any) => {
+    setLoading(true);
+    axios
+      .delete(`https://projectfebe.online/users/${id}`, {
+        headers: {
+          Authorization: `Bearer ${checkToken}`,
+        },
+      })
+      .then((res) => {
+        const { message } = res.data;
+
+        const update = users.filter((item) => item.id !== id);
+        setUsers(update);
+        MySwal.fire({
+          icon: "success",
+          title: message,
+          text: "Berhasil delete user",
+          showCancelButton: false,
+        });
+      })
+      .catch((err) => {
+        const { data } = err.response;
+        MySwal.fire({
+          icon: "error",
+          title: data.message,
+          text: "Gagal delete user",
+          showCancelButton: false,
+        });
+      })
+      .finally(() => setLoading(false));
   };
 
   const handleNavigate = (id: any) => {
@@ -101,7 +134,6 @@ const UserList = () => {
         </div>
         <div className="mt-24 overflow-x-auto">
           <table className="table w-full">
-            {/* head */}
             <thead>
               <tr>
                 <th className="w-1/12 bg-[#232932] text-white">No</th>
@@ -131,7 +163,10 @@ const UserList = () => {
                     </p>
                   </td>
                   <td>
-                    <p className="flex gap-2 font-normal text-red-500">
+                    <p
+                      className="flex gap-2 font-normal text-red-500 hover:cursor-pointer hover:text-red-300"
+                      onClick={() => handleDelete(user.id)}
+                    >
                       <TfiTrash color="red" size={25} />
                       Delete
                     </p>
