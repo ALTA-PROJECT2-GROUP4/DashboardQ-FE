@@ -48,7 +48,7 @@ const AddClass = () => {
 
     axios
       .post(
-        `https://virtserver.swaggerhub.com/ALFIANADSAPUTRA_1/DashboardQ/1.0.0/class`,
+        `https://projectfebe.online/class`,
         body,
         {
           headers: {
