@@ -18,6 +18,7 @@ const Navbar = () => {
     "name",
     "email",
     "role",
+    "id",
   ]);
   const chechkToken = cookie.token;
   const checkEmail = cookie.email;
@@ -41,10 +42,9 @@ const Navbar = () => {
         removeCookie("name");
         removeCookie("email");
         removeCookie("role");
+        removeCookie("id");
 
         navigate("/");
-      } else if (logout.isDismissed) {
-        navigate("/dashboard");
       }
     });
   };
@@ -58,9 +58,6 @@ const Navbar = () => {
           className="w-52 hover:cursor-pointer"
           onClick={() => navigate("/dashboard")}
         />
-        {/* <a className="btn-ghost btn text-3xl normal-case text-[#232932]">
-          Brain. <span className="text-white">Academy</span>
-        </a> */}
       </div>
 
       <div className="pr-5">

@@ -34,4 +34,9 @@ export interface ClassType {
   start_class: string;
   end_class: string;
   mentor: string;
+  user: User;
 }
+
+type User = {
+  user_name: string;
+};
