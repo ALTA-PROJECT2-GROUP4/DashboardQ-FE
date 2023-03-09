@@ -149,40 +149,43 @@ const MenteeList = () => {
           <table className="table w-full">
             <thead>
               <tr>
-                <th className="w-1/12 bg-[#232932] text-white">No</th>
-                <th className="w-2/12 bg-[#232932] text-white">Full Name</th>
-                <th className="w-1/12 bg-[#232932] text-white">Class</th>
-                <th className="w-1/12 bg-[#232932] text-white">Status</th>
-                <th className="w-2/12 bg-[#232932] text-white">Category</th>
-                <th className="w-1/12 bg-[#232932] text-white">Gender</th>
-                <th className="w-1/12 bg-[#232932] text-white"></th>
-                <th className="w-1/12 bg-[#232932] text-white"></th>
-                <th className="w-1/12 bg-[#232932] text-white"></th>
+                <th className="w-1/12 bg-[#232932] text-color2">No</th>
+                <th className="w-2/12 bg-[#232932] text-color2">Full Name</th>
+                <th className="w-1/12 bg-[#232932] text-color2">Class</th>
+                <th className="w-1/12 bg-[#232932] text-color2">Status</th>
+                <th className="w-1/12 bg-[#232932] text-color2">Category</th>
+                <th className="w-1/12 bg-[#232932] text-color2">Gender</th>
+                <th className="w-1/12 bg-[#232932] text-color2"></th>
+                <th className="w-1/12 bg-[#232932] text-color2"></th>
+                <th className="w-1/12 bg-[#232932] text-color2"></th>
               </tr>
             </thead>
             <tbody>
               {filterMentee.map((mentee) => (
-                <tr key={mentee.id} className="font-semibold">
-                  <th>{mentee.id}</th>
+                <tr key={mentee.id} className="font-normal">
+                  <th className="font-normal">{mentee.id}</th>
                   <td>{mentee.name}</td>
                   <td>{mentee.class}</td>
                   <td>{mentee.status}</td>
                   <td>{mentee.category}</td>
                   <td>{mentee.gender}</td>
                   <td>
-                    <p className="flex gap-2 font-normal">
+                    <p
+                      onClick={() => navigate(`/menteelog/${mentee.id}`)}
+                      className="flex gap-2 font-normal hover:cursor-pointer hover:text-[rgba(35,41,50,0.6)]"
+                    >
                       <GoBook size={25} />
                       Log
                     </p>
                   </td>
                   <td onClick={() => navigate(`/editmente/${mentee.id}`)}>
-                    <p className="flex gap-2 font-normal">
+                    <p className="flex gap-2 font-normal hover:cursor-pointer hover:text-[rgba(35,41,50,0.6)]">
                       <BiEdit size={25} />
                       Edit
                     </p>
                   </td>
                   <td>
-                    <p className="flex gap-2 font-normal text-red-500">
+                    <p className="flex gap-2 font-normal text-red-500 hover:cursor-pointer hover:text-red-300">
                       <TfiTrash color="red" size={25} />
                       Delete
                     </p>

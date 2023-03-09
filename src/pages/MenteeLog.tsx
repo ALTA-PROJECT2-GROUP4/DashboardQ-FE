@@ -1,20 +1,27 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
+import CustomButton from "../components/CustomButton";
 import Layout from "../components/Layout";
 import Navbar from "../components/Navbar";
 
+import "../styles/index.css";
+
 const MenteeLog = () => {
+  const navigate = useNavigate();
+
   return (
     <Layout>
       <Navbar />
       <div className="flex flex-col p-20">
-        <p className="-mt-12 text-5xl font-semibold text-[#000000]">Mentee</p>
-        <div className="-mt-3 flex flex-col p-4">
-          <p className="text-3xl font-semibold text-black">Jhon Doe</p>
-          <p className="text-xl font-semibold text-black opacity-60">
-            FE Batch 12
-          </p>
-          <p className="text-xl font-semibold text-black opacity-60">
+        <p className="laila -mt-12 text-5xl font-bold text-color1">
+          Mentee Log
+        </p>
+        <div className="-mt-3 flex flex-col p-4 text-color1">
+          <p className="laila text-3xl font-semibold ">Jhon Doe</p>
+          <p className="laila text-xl font-semibold opacity-60">FE Batch 12</p>
+          <p className="laila text-xl font-semibold opacity-60">
             Non-Informatics
           </p>
         </div>
@@ -22,29 +29,39 @@ const MenteeLog = () => {
           <div className="overflow-x-auto">
             <table className="table w-4">
               <tbody>
-                {/* row 1 */}
                 <tr>
-                  <th className="w-1/12 bg-transparent">Phone</th>
-                  <td className="bg-transparent font-semibold">
+                  <th className="laila w-1/12 bg-transparent">Phone</th>
+                  <td className="laila bg-transparent font-semibold">
                     : 081122334455
                   </td>
                 </tr>
-                {/* row 2 */}
+
                 <tr>
-                  <th className="w-1/12 bg-transparent">Telegram</th>
-                  <td className="bg-transparent font-semibold">: @jhondoe</td>
+                  <th className="laila lead w-1/12 bg-transparent">Telegram</th>
+                  <td className="laila bg-transparent font-semibold">
+                    : @jhondoe
+                  </td>
                 </tr>
-                {/* row 3 */}
+
                 <tr>
-                  <th className="w-1/12 bg-transparent">Email</th>
-                  <td className="bg-transparent font-semibold">
+                  <th className="laila w-1/12 bg-transparent">Email</th>
+                  <td className="laila bg-transparent font-semibold">
                     : jhonDoe@gmail.com
                   </td>
                 </tr>
               </tbody>
             </table>
+
+            <div className="mt-5 text-end">
+              <CustomButton
+                id="btn-addLog"
+                label="Add new log"
+                onClick={() => navigate("/addfeedback")}
+              />
+            </div>
           </div>
         </div>
+
         <div className="mt-10 flex flex-col ">
           <div className="card w-full gap-3 bg-white">
             <div className="card-body grid grid-cols-3">

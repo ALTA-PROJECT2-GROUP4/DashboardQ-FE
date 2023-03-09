@@ -27,11 +27,12 @@ const App = () => {
         <Route path="/adduser" element={<AddUser />} />
         <Route path="/addmente" element={<AddMente />} />
         <Route path="/addclass" element={<AddClass />} />
+        <Route path="/addfeedback" element={<AddNewLog />} />
+        <Route path="/menteelog/:mente_id" element={<MenteeLog />} />
         <Route path="/edituser/:user_id" element={<EditUser />} />
         <Route path="/mente/:mente_id" element={<MenteeLog />} />
         <Route path="/editclass/:class_id" element={<EditClass />} />
         <Route path="/editmente/:mente_id" element={<EditMente />} />
-        <Route path="/addfeedback/:mente_id" element={<AddNewLog />} />
       </Routes>
     </BrowserRouter>
   );
