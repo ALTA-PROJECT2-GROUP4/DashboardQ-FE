@@ -60,7 +60,7 @@ const EditClass = () => {
     setLoading(true);
     axios
       .get(
-        `https://virtserver.swaggerhub.com/ALFIANADSAPUTRA_1/DashboardQ/1.0.0/class/${class_id}`,
+        `https://projectfebe.online/class/${class_id}`,
         {
           headers: {
             Authorization: `Bearer ${checkToken}`,
@@ -91,7 +91,7 @@ const EditClass = () => {
 
     axios
       .put(
-        `https://virtserver.swaggerhub.com/ALFIANADSAPUTRA_1/DashboardQ/1.0.0/class/${class_id}`,
+        `https://projectfebe.online/class/${class_id}`,
         formData,
         {
           headers: {
