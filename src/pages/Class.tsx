@@ -125,7 +125,7 @@ const Class = () => {
                 <tr key={data.id} className="font-normal">
                   <th className="font-normal">{index + 1}</th>
                   <td>{data.name}</td>
-                  <td>{data.mentor}</td>
+                  <td>{data.user.user_name}</td>
                   <td>{moment(data.start_class).format("DD-MMM-YY")}</td>
                   <td>{moment(data.end_class).format("DD-MMM-YY")}</td>
                   <td onClick={() => navigate(`/editclass/${data.id}`)}>
