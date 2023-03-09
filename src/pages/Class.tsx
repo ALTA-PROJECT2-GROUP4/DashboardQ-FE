@@ -4,6 +4,9 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import moment from "moment";
 
+import withReactContent from "sweetalert2-react-content";
+import Swal from "../utils/Swal";
+
 import { ClassType } from "../types/Mentee";
 
 import Layout from "../components/Layout";
@@ -14,6 +17,7 @@ import { TfiTrash } from "react-icons/tfi";
 
 const Class = () => {
   const navigate = useNavigate();
+  const MySwal = withReactContent(Swal);
   const [cookie, setCookie] = useCookies(["token", "role"]);
   const checkToken = cookie.token;
 
@@ -45,6 +49,49 @@ const Class = () => {
       })
       .finally(() => setLoading(false));
   }
+
+  const handleDelete = async (id: any) => {
+    MySwal.fire({
+      icon: "warning",
+      title: "Are you sure?",
+      text: "select again to cancel",
+      confirmButtonText: "Delete Class",
+    }).then((confirme) => {
+      if (confirme.isConfirmed) {
+        setLoading(true);
+        axios
+          .delete(
+            `https://virtserver.swaggerhub.com/ALFIANADSAPUTRA_1/DashboardQ/1.0.0/class/${id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${checkToken}`,
+              },
+            }
+          )
+          .then((response) => {
+            const { message } = response.data;
+            const update = datas.filter((item) => item.id !== id);
+            setDatas(update);
+            MySwal.fire({
+              icon: "success",
+              title: message,
+              text: "Succesfully Delete Class",
+              showCancelButton: false,
+            });
+          })
+          .catch((error) => {
+            const { data } = error.response;
+            MySwal.fire({
+              icon: "error",
+              title: data.message,
+              text: "failed Delete Class",
+              showCancelButton: false,
+            });
+          })
+          .finally(() => setLoading(false));
+      }
+    });
+  };
 
   return (
     <Layout>
@@ -94,7 +141,10 @@ const Class = () => {
                     </p>
                   </td>
                   <td>
-                    <p className="flex gap-2 font-normal text-red-500">
+                    <p
+                      className="flex gap-2 font-normal text-red-500"
+                      onClick={() => handleDelete(data.id)}
+                    >
                       <TfiTrash color="red" size={25} />
                       Delete
                     </p>
