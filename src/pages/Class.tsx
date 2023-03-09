@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import moment from "moment";
@@ -12,6 +13,7 @@ import { BiEdit } from "react-icons/bi";
 import { TfiTrash } from "react-icons/tfi";
 
 const Class = () => {
+  const navigate = useNavigate();
   const [cookie, setCookie] = useCookies(["token", "role"]);
   const checkToken = cookie.token;
 
@@ -57,7 +59,10 @@ const Class = () => {
               className="input-bordered input rounded-xl text-black"
             />
           </div>
-          <button className="btn rounded-2xl bg-[#1F4068]">
+          <button
+            onClick={() => navigate("/addclass")}
+            className="btn rounded-2xl bg-[#1F4068]"
+          >
             Add New Class
           </button>
         </div>
