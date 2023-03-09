@@ -58,46 +58,45 @@ const UserList = () => {
     item.name?.toLowerCase().includes(search.toLowerCase())
   );
 
-  const deleteUser = (id: number) => {
-    axios
-      .delete(`https://projectfebe.online/users/${id}`)
-      .then(() => {
-        const updatedUsers = users.filter((user) => user.id !== id);
-        setUsers(updatedUsers);
-      })
-      .catch((error) => console.log(error));
-  };
-
   const handleDelete = async (id: any) => {
-    setLoading(true);
-    axios
-      .delete(`https://projectfebe.online/users/${id}`, {
-        headers: {
-          Authorization: `Bearer ${checkToken}`,
-        },
-      })
-      .then((res) => {
-        const { message } = res.data;
+    MySwal.fire({
+      icon: "warning",
+      title: "Delete User ?",
+      text: "pilih kembali untuk membatalkan",
+      confirmButtonText: "Delete user",
+    }).then((confirm) => {
+      if (confirm.isConfirmed) {
+        setLoading(true);
+        axios
+          .delete(`https://projectfebe.online/users/${id}`, {
+            headers: {
+              Authorization: `Bearer ${checkToken}`,
+            },
+          })
+          .then((res) => {
+            const { message } = res.data;
 
-        const update = users.filter((item) => item.id !== id);
-        setUsers(update);
-        MySwal.fire({
-          icon: "success",
-          title: message,
-          text: "Berhasil delete user",
-          showCancelButton: false,
-        });
-      })
-      .catch((err) => {
-        const { data } = err.response;
-        MySwal.fire({
-          icon: "error",
-          title: data.message,
-          text: "Gagal delete user",
-          showCancelButton: false,
-        });
-      })
-      .finally(() => setLoading(false));
+            const update = users.filter((item) => item.id !== id);
+            setUsers(update);
+            MySwal.fire({
+              icon: "success",
+              title: message,
+              text: "Berhasil delete user",
+              showCancelButton: false,
+            });
+          })
+          .catch((err) => {
+            const { data } = err.response;
+            MySwal.fire({
+              icon: "error",
+              title: data.message,
+              text: "Gagal delete user",
+              showCancelButton: false,
+            });
+          })
+          .finally(() => setLoading(false));
+      }
+    });
   };
 
   const handleNavigate = (id: any) => {
@@ -112,7 +111,7 @@ const UserList = () => {
     <Layout>
       <Navbar />
       <div className="-mt-16 flex flex-col p-20">
-        <h2 className="mt-20 text-5xl font-semibold text-[#000000]">User</h2>
+        <h2 className="mt-20 text-5xl font-semibold text-color1">User</h2>
         <div className="-mt-11 flex flex-wrap justify-end space-x-4">
           <div className="form-control">
             <input
@@ -120,7 +119,7 @@ const UserList = () => {
               placeholder="Search..."
               value={search}
               onChange={(event) => setSearch(event.target.value)}
-              className="input-bordered input rounded-xl text-black"
+              className="input-bordered input rounded-xl text-color1"
             />
           </div>
           <button
