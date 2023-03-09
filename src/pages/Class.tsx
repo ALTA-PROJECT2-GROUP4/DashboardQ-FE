@@ -32,14 +32,11 @@ const Class = () => {
   function fetchData() {
     setLoading(true);
     axios
-      .get(
-        "https://projectfebe.online/class",
-        {
-          headers: {
-            Authorization: `Bearer ${checkToken}`,
-          },
-        }
-      )
+      .get("https://projectfebe.online/class", {
+        headers: {
+          Authorization: `Bearer ${checkToken}`,
+        },
+      })
       .then((res) => {
         const { data } = res.data;
         setDatas(data);
@@ -60,14 +57,11 @@ const Class = () => {
       if (confirme.isConfirmed) {
         setLoading(true);
         axios
-          .delete(
-            `https://projectfebe.online/class/${id}`,
-            {
-              headers: {
-                Authorization: `Bearer ${checkToken}`,
-              },
-            }
-          )
+          .delete(`https://projectfebe.online/class/${id}`, {
+            headers: {
+              Authorization: `Bearer ${checkToken}`,
+            },
+          })
           .then((response) => {
             const { message } = response.data;
             const update = datas.filter((item) => item.id !== id);
@@ -142,7 +136,7 @@ const Class = () => {
                   </td>
                   <td>
                     <p
-                      className="flex gap-2 font-normal text-red-500"
+                      className="flex gap-2 font-normal text-red-500 hover:cursor-pointer hover:text-red-300"
                       onClick={() => handleDelete(data.id)}
                     >
                       <TfiTrash color="red" size={25} />
