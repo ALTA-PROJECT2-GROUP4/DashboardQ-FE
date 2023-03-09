@@ -43,7 +43,7 @@ const MenteeList = () => {
     setLoading(true);
     axios
       .get(
-        `https://virtserver.swaggerhub.com/ALFIANADSAPUTRA_1/DashboardQ/1.0.0/mentee`,
+        `https://projectfebe.online/mentee`,
         {
           headers: {
             Authorization: `Bearer ${cookie.token}`,
