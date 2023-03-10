@@ -115,11 +115,13 @@ const MenteeList = () => {
             onChange={handleFilterClassChange}
           >
             <option value="">Class</option>
+
             <option value="FE Batch 12">FE Batch 12</option>
             <option value="FE Batch 13">FE Batch 13</option>
             <option value="BE Batch 10">BE Batch 10</option>
             <option value="QE Batch 09">QE Batch 09</option>
             <option value="QE Batch 10">QE Batch 10</option>
+
           </select>
           <select
             className="select w-1/5 max-w-xs rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
@@ -138,8 +140,8 @@ const MenteeList = () => {
             onChange={handleFilterCategoryChange}
           >
             <option value="">Category</option>
-            <option value="IT">Infomatics</option>
-            <option value="Non-IT">Non-Informatics</option>
+            <option value="Infomatics">Infomatics</option>
+            <option value="Non-Informatics">Non-Informatics</option>
           </select>
           <button className="btn rounded-2xl bg-[#1F4068]">Filter</button>
         </div>
@@ -154,7 +156,6 @@ const MenteeList = () => {
                 <th className="w-1/12 bg-[#232932] text-color2">Status</th>
                 <th className="w-1/12 bg-[#232932] text-color2">Category</th>
                 <th className="w-1/12 bg-[#232932] text-color2">Gender</th>
-                <th className="w-1/12 bg-[#232932] text-color2"></th>
                 <th className="w-1/12 bg-[#232932] text-color2"></th>
                 <th className="w-1/12 bg-[#232932] text-color2"></th>
               </tr>
@@ -181,12 +182,6 @@ const MenteeList = () => {
                     <p className="flex gap-2 font-normal hover:cursor-pointer hover:text-[rgba(35,41,50,0.6)]">
                       <BiEdit size={25} />
                       Edit
-                    </p>
-                  </td>
-                  <td>
-                    <p className="flex gap-2 font-normal text-red-500 hover:cursor-pointer hover:text-red-300">
-                      <TfiTrash color="red" size={25} />
-                      Delete
                     </p>
                   </td>
                 </tr>

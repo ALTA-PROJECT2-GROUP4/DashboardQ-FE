@@ -59,44 +59,51 @@ const UserList = () => {
   );
 
   const handleDelete = async (id: any) => {
-    MySwal.fire({
-      icon: "warning",
-      title: "Delete User ?",
-      text: "pilih kembali untuk membatalkan",
-      confirmButtonText: "Delete user",
-    }).then((confirm) => {
-      if (confirm.isConfirmed) {
-        setLoading(true);
-        axios
-          .delete(`https://projectfebe.online/users/${id}`, {
-            headers: {
-              Authorization: `Bearer ${checkToken}`,
-            },
-          })
-          .then((res) => {
-            const { message } = res.data;
+    checkRole === "admin"
+      ? MySwal.fire({
+          icon: "warning",
+          title: "Delete User ?",
+          text: "pilih kembali untuk membatalkan",
+          confirmButtonText: "Delete user",
+        }).then((confirm) => {
+          if (confirm.isConfirmed) {
+            setLoading(true);
+            axios
+              .delete(`https://projectfebe.online/users/${id}`, {
+                headers: {
+                  Authorization: `Bearer ${checkToken}`,
+                },
+              })
+              .then((res) => {
+                const { message } = res.data;
 
-            const update = users.filter((item) => item.id !== id);
-            setUsers(update);
-            MySwal.fire({
-              icon: "success",
-              title: message,
-              text: "Berhasil delete user",
-              showCancelButton: false,
-            });
-          })
-          .catch((err) => {
-            const { data } = err.response;
-            MySwal.fire({
-              icon: "error",
-              title: data.message,
-              text: "Gagal delete user",
-              showCancelButton: false,
-            });
-          })
-          .finally(() => setLoading(false));
-      }
-    });
+                const update = users.filter((item) => item.id !== id);
+                setUsers(update);
+                MySwal.fire({
+                  icon: "success",
+                  title: message,
+                  text: "Berhasil delete user",
+                  showCancelButton: false,
+                });
+              })
+              .catch((err) => {
+                const { data } = err.response;
+                MySwal.fire({
+                  icon: "error",
+                  title: data.message,
+                  text: "Gagal delete user",
+                  showCancelButton: false,
+                });
+              })
+              .finally(() => setLoading(false));
+          }
+        })
+      : MySwal.fire({
+          icon: "error",
+          title: "Akses Ditolak",
+          text: "diperlukan akses admin untuk menghapus",
+          showCancelButton: false,
+        });
   };
 
   const handleNavigate = (id: any) => {
