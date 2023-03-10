@@ -18,17 +18,17 @@ const LandingPage = () => {
     setModal("modal-open");
   };
 
-  const HandleRegis = () => {
-    MySwal.fire({
-      icon: "info",
-      html: `
-            <p class="text-color1 mb-5 text-[20px] capitalize">Ingin mendaftar Akun ?</p>
-            <p class="text-color1 mb-5 text-[18px] capitalize">Hubungi kami di Whatsapp berikut :</p>
-            <a class="text-color6 px-4 py-0 rounded-full" href="${"https://wa.me/6289523894186"}">Menuju Whatsapp</a>`,
-      showConfirmButton: false,
-      showCancelButton: false,
-    });
-  };
+  // const HandleRegis = () => {
+  //   MySwal.fire({
+  //     icon: "info",
+  //     html: `
+  //           <p class="text-color1 mb-5 text-[20px] capitalize">Ingin mendaftar Akun ?</p>
+  //           <p class="text-color1 mb-5 text-[18px] capitalize">Hubungi kami di Whatsapp berikut :</p>
+  //           <a class="text-color6 px-4 py-0 rounded-full" href="${"https://wa.me/6289523894186"}">Menuju Whatsapp</a>`,
+  //     showConfirmButton: false,
+  //     showCancelButton: false,
+  //   });
+  // };
 
   return (
     <Layout>
@@ -56,7 +56,7 @@ const LandingPage = () => {
             Login
           </button>
 
-          <p className="md:mt-4 md:text-[20px] lg:mt-2 lg:text-[14px]">
+          {/* <p className="md:mt-4 md:text-[20px] lg:mt-2 lg:text-[14px]">
             don't have account ?
             <span
               onClick={() => HandleRegis()}
@@ -65,7 +65,7 @@ const LandingPage = () => {
               {" "}
               Register now
             </span>
-          </p>
+          </p> */}
         </div>
 
         <div className="hidden justify-center md:hidden md:w-6/12 lg:flex lg:w-7/12">
