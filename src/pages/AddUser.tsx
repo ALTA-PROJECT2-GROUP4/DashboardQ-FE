@@ -30,7 +30,6 @@ const AddUser = () => {
   const [role, setRole] = useState<string>("");
   const [address, setAddress] = useState<string>("");
   const [bod, setBod] = useState<string>("");
-
   const [clear, setClear] = useState<string>("");
 
   // const [formData, setFormData] = useState({
@@ -39,7 +38,6 @@ const AddUser = () => {
   //   password: "",
   //   email: "",
   //   team: "",
-  //   gender: "",
   //   role: "",
   //   address: "",
   //   date_birth: "",
