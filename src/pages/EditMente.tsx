@@ -209,6 +209,7 @@ const EditMente = () => {
             <option value="Active">Active</option>
             <option value="Graduate">Graduate</option>
             <option value="Eliminate">Eliminate</option>
+            <option value="Placement">Placement</option>
           </select>
         </div>
 

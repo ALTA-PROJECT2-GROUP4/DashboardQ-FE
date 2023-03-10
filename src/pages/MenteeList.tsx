@@ -115,9 +115,13 @@ const MenteeList = () => {
             onChange={handleFilterClassChange}
           >
             <option value="">Class</option>
-            <option value="FE12">FE12</option>
-            <option value="BE10">BE10</option>
-            <option value="QE8">QE8</option>
+
+            <option value="FE Batch 12">FE Batch 12</option>
+            <option value="FE Batch 13">FE Batch 13</option>
+            <option value="BE Batch 10">BE Batch 10</option>
+            <option value="QE Batch 09">QE Batch 09</option>
+            <option value="QE Batch 10">QE Batch 10</option>
+
           </select>
           <select
             className="select w-1/5 max-w-xs rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
