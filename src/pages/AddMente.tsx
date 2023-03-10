@@ -199,10 +199,10 @@ const AddMente = () => {
             <option value="DEFAULT" disabled>
               Pilih Salah Satu
             </option>
+            <option value="FE Batch 12">FE Batch 12</option>
+            <option value="FE Batch 13">FE Batch 13</option>
             <option value="BE Batch 10">BE Batch 10</option>
-            <option value="BE Batch 9">BE Batch 9</option>
-            <option value="FE Batch 9">FE Batch 9</option>
-            <option value="FE Batch 8">FE Batch 8</option>
+            <option value="QE Batch 9">BE Batch 9</option>
             <option value="QE Batch 10">QE Batch 10</option>
           </select>
         </div>

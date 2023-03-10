@@ -130,7 +130,7 @@ const MenteeList = () => {
           >
             <option value="">Status</option>
             <option value="Placement">Placement</option>
-            <option value="Gradueted">Graduet</option>
+            <option value="Graduate">Graduate</option>
             <option value="Active">Active</option>
             <option value="Eliminated">Eliminated</option>
           </select>
@@ -140,8 +140,8 @@ const MenteeList = () => {
             onChange={handleFilterCategoryChange}
           >
             <option value="">Category</option>
-            <option value="Infomatics">Infomatics</option>
-            <option value="Non-Informatics">Non-Informatics</option>
+            <option value="Informatic">Infomatics</option>
+            <option value="Non-Informatic">Non-Informatics</option>
           </select>
           <button className="btn rounded-2xl bg-[#1F4068]">Filter</button>
         </div>

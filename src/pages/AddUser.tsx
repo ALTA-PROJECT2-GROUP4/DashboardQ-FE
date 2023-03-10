@@ -70,7 +70,7 @@ const AddUser = () => {
     };
 
     axios
-      .post("http://54.179.232.197/register", body, {
+      .post("https://projectfebe.online/register", body, {
         headers: {
           Authorization: `Bearer ${checkToken}`,
         },
